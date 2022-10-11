@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="product_template_is_ship" model="ir.ui.view">
+            <field name="name">product.template.is.ship</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@name='options']" position="inside">
+                    <span class="d-inline-block">
+                        <field name="is_ship_product"/>
+                        <label for="is_ship_product"/>
+                    </span>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="purchase_requisition_component_unit_price" model="ir.ui.view">
+            <field name="name">purchase.requisition.component.unit.price</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='vendor_id']" position="after">
+                    <field name="ship_id"/>
+                    <label for="ship_price"/>
+                    <div class="o_row">
+                        <field name="ship_price" />
+                        <button name="update_prices" type="object" string=" Update Prices"  class="btn-link mb-1 px-0" icon="fa-refresh" />
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

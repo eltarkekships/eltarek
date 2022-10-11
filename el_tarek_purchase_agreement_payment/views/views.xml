@@ -1,0 +1,33 @@
+<odoo>
+  <data>
+    <!-- Inherit Form View to Modify it -->
+    <record id="purchase_requisition_register_payment" model="ir.ui.view">
+        <field name="name">purchase.requisition.register.payment</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_open']" position="after">
+                <button name="action_payment" attrs="{'invisible':[('state','=','draft')]}"
+                        string="Register Payment"
+                        type="object" class="btn-primary"/>
+            </xpath>
+
+        </field>
+    </record>
+      <!-- Inherit Form View to Modify it -->
+      <record id="account_payment_guarantee_account" model="ir.ui.view">
+          <field name="name">account.payment.guarantee.account</field>
+          <field name="model">account.payment</field>
+          <field name="inherit_id" ref="account.view_account_payment_form"/>
+          <field name="arch" type="xml">
+
+              <xpath expr="//field[@name='ref']" position="after">
+                  <field name="is_guarantee"/>
+                  <field name="guarantee_account_id" attrs="{'invisible':[('is_guarantee', '=', False)]}"/>
+              </xpath>
+
+          </field>
+      </record>
+  </data>
+</odoo>

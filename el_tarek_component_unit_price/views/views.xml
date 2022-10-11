@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="el_tarek_component_unit_price.list">
+      <field name="name">el_tarek_component_unit_price list</field>
+      <field name="model">el_tarek_component_unit_price.el_tarek_component_unit_price</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="el_tarek_component_unit_price.action_window">
+      <field name="name">el_tarek_component_unit_price window</field>
+      <field name="res_model">el_tarek_component_unit_price.el_tarek_component_unit_price</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="el_tarek_component_unit_price.action_server">
+      <field name="name">el_tarek_component_unit_price server</field>
+      <field name="model_id" ref="model_el_tarek_component_unit_price_el_tarek_component_unit_price"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="el_tarek_component_unit_price" id="el_tarek_component_unit_price.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="el_tarek_component_unit_price.menu_1" parent="el_tarek_component_unit_price.menu_root"/>
+    <menuitem name="Menu 2" id="el_tarek_component_unit_price.menu_2" parent="el_tarek_component_unit_price.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="el_tarek_component_unit_price.menu_1_list" parent="el_tarek_component_unit_price.menu_1"
+              action="el_tarek_component_unit_price.action_window"/>
+    <menuitem name="Server to list" id="el_tarek_component_unit_price" parent="el_tarek_component_unit_price.menu_2"
+              action="el_tarek_component_unit_price.action_server"/>
+-->
+  </data>
+</odoo>

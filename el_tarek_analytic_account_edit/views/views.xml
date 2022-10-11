@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="analytic_account_required" model="ir.ui.view">
+            <field name="name">analytic.account.required</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_account_id']" position="before">
+<!--                    <field name="user_type_id" invisible="1"/>-->
+                    <field name="is_income" />
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_account_id']" position="attributes">
+                  <attribute name="attrs">{'required': [('is_income', '=', True)]}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

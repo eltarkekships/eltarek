@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="delivery_requests_view_form" model="ir.ui.view">
+        <field name="name">Delivery Request form view</field>
+        <field name="model">centione.delivery.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="is_approved" invisible="1"/>
+                    <field name="is_approved2" invisible="1"/>
+                    <button name="submit_request" string="Submit" type="object" states="draft"
+                            groups="eltarek_delivery_request_generic.group_submit_delivery_request"
+                            class="btn-primary"/>
+                    <!--<button name="first_approve" string="Employee manager Approval" type="object"-->
+                            <!--class="btn-primary"-->
+                            <!--attrs="{'invisible':['|',('is_approved','!=',True),('state','!=','first_approved_by_manager')]}"/>-->
+                    <button name="warehouse_review" string="Warehouse Review" type="object"
+                            attrs="{'invisible':[('state','!=','control_approval')]}"
+                            class="btn-primary"
+                            groups="eltarek_delivery_request_generic.group_warehouse_review"/>
+
+                    <button name="%(products_category_approve_lines_action)d" string="Approve All"
+                            attrs="{'invisible':[('state','!=','approved_by_manager')]}"
+                            type="action"
+                            class="btn-primary"/>
+                    <button name="cancel_request_action" string="Cancel" type="object"
+                            attrs="{'invisible':[('state','in',['cancel', 'finished'])]}"
+                            class="btn-primary"/>
+                    <button name="finished_function" string="Finished"
+                            attrs="{'invisible':[('state', 'in', ['approved_by_manager','control_approval','cancel', 'finished','draft'])]}"
+                            type="object"
+                            class="btn-primary"/>
+<!--                    <button name="%(create_transfer_request_lines_action)d" string="Transfer Request"-->
+<!--                            type="action"-->
+<!--                            groups="stock.group_stock_manager"-->
+<!--                            class="btn-primary"/>-->
+
+                    <button name="%(create_centione_purchase_lines_action)d" string="Purchase Request2" invisible="1"
+                            type="action"
+                            groups="stock.group_stock_manager"
+                            class="btn-primary"/>
+                    <button name="transfer_all" type="object"  string="Transfer All" class="btn-primary" attrs="{'invisible':[('state','!=','warehouse_review')]}" />
+                    <button name="purchase_all" type="object"  string="Purchase All" class="btn-primary" attrs="{'invisible':[('state','!=','warehouse_review')]}"/>
+                    <button name="receive_all" type="object"  string="Receive All" class="btn-primary" attrs="{'invisible':[('state','!=','warehouse_review')]}"/>
+                    <field name="hide" invisible="1"/>
+
+                    <!--<button name="purchase_request" string="review" type="object" states="warehouse_review"-->
+                    <!--class="btn-primary"/>-->
+                    <!--<button name="purchase_order" string="Purchase order" type="object" states="purchase_request"-->
+                    <!--class="btn-primary"/>-->
+                    <!--<button name="received" string="Received" type="object" states="purchase_order"-->
+                    <!--class="btn-primary"/>-->
+                    <!--<button name="cancel_request" string="Cancel" type="object" states="submit" groups="stock.group_stock_manager"/>-->
+                    <!--<button name="set_request_to_draft" string="Set to Draft" type="object" states="cancel" groups="stock.group_stock_manager"/>-->
+                    <field name="state" widget="statusbar"/>
+                    <field name="current_user_id" invisible="True"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="delivery_transfers_action" type="object" attrs="{'invisible':[('transfer_count','=',0)]}"
+                                class="oe_stat_button" icon="fa-list">
+                            <field string="Transfers" name="transfer_count" widget="statinfo"/>
+                        </button>
+                        <button name="delivery_purchases_action" type="object" attrs="{'invisible':[('delivery_purchase_count','=',0)]}"
+                                class="oe_stat_button" icon="fa-list">
+                            <field string="Purchase Requests" name="delivery_purchase_count" widget="statinfo"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly='True'/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="create_by" readonly='True'/>
+                        <field name="create_date" readonly='True'/>
+                        <field name="analytic_account_id" readonly='False'/>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="delivery_lines_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree editable="buttom">
+                                    <field name="product_id"/>
+                                    <!--<field name="product_arabic_name"/>-->
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                    <field name="notes"/>
+                                    <field name="request_id" invisible="True"/>
+                                    <field name="received_amount" readonly='True'/>
+
+                                    <!--<field name="picking_type_id"/>-->
+                                    <field name="is_manager" invisible="1"/>
+                                    <field name="state" invisible="True"/>
+                                    <field name="is_service" invisible="True"/>
+                                    <field name="hide" invisible="1"/>
+                                    <field name="is_approved2" invisible="1"/>
+                                    <!--<button name="approve_line" string="Approve" type="object"/>-->
+
+                                    <button name="%(receive_confirmation_action)d"
+                                            string="Receive"
+                                            states="purchase_request,requested"
+                                            type="action"
+                                    />
+
+                                    <button name="%(create_centione_purchase_action)d" string="Purchase Request"
+
+                                            states="warehouse_review" type="action"  groups="eltarek_delivery_request_generic.group_warehouse_review"
+                                    />
+                                     <!--groups="stock.group_stock_manager,eltarek_delivery_request_generic.group_employee_manager_approval_show"-->
+
+                                    <button name="%(create_transfer_request_action)d" string="Transfer Request"
+                                            attrs="{'invisible': ['|',('state', '!=', 'warehouse_review'),('is_service', '=', True)]}"
+                                            groups="eltarek_delivery_request_generic.group_warehouse_review"
+
+                                            type="action"
+                                    />
+                                    <!--groups="stock.group_stock_manager,eltarek_delivery_request_generic.group_employee_manager_approval_show"-->
+<!--                                    <button name="approve_line"-->
+<!--                                            string="Products Cat. managers Approval"-->
+<!--                                            type="object"-->
+<!--                                            class="btn-primary"-->
+<!--                                            attrs="{'invisible': ['|','|',('is_manager', '!=', True),('is_approved2', '=', True),('state', '!=', 'approved_by_manager')]}"/>-->
+
+                                    <button name="cancel_line" string="Cancel" type="object"
+                                            attrs="{'invisible': ['|','|',('is_manager', '!=', True),('is_approved2', '=', True),('state', '!=', 'approved_by_manager')]}"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Cancel Reason">
+                            <field name="reason"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="delivery_request_view_tree" model="ir.ui.view">
+        <field name="name">Delivery Request tree view</field>
+        <field name="model">centione.delivery.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="create_uid"/>
+                <field name="employee_id"/>
+                <field name="delivery_lines_ids"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="delivery_request_action" model="ir.actions.act_window">
+        <field name="name">Material Requests</field>
+        <field name="res_model">centione.delivery.request</field>
+
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_centione_delivery_request_line_tree" model="ir.ui.view">
+        <field name="name">centione.delivery.request.line.tree</field>
+        <field name="model">centione.delivery.request.line</field>
+        <field name="arch" type="xml">
+            <tree string="MODEL">
+                <field name="product_id"/>
+                <!--<field name="product_arabic_name"/>-->
+                <field name="notes"/>
+                <field name="qty"/>
+                <field name="uom_id"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

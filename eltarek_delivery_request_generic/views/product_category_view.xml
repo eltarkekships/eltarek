@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_category_form_view_inherit" model="ir.ui.view">
+        <field name="name">product_category_form_view_inherit</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="model">product.category</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="manager_id" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Delivery Request Config.">
+                        <group>
+                            <group>
+                                <field name="delivery_location_id"/>
+                                <field name="delivery_location_dest_id"/>
+                            </group>
+                            <group>
+                                <field name="picking_type_first_id"/>
+                                <field name="picking_type_second_id"/>
+                                <field name="picking_type_purchase_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

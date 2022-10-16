@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record id="view_purchase_all_form" model="ir.ui.view">
+            <field name="name">view.purchase_all.form</field>
+            <field name="model">purchase.all.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Purchase All">
+                    <sheet>
+                        <notebook>
+
+                            <page string="Delivery Request Lines">
+                                <field name="delivery_id" invisible="1" />
+                                <field name="request_lines" invisible="1" />
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="delivery_id" invisible="1" />
+                                        <field name="line_id" domain="[('id','in',parent.request_lines)]" required="1"/>
+                                        <field name="transfer_quantity"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button name="confirm_purchasing" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

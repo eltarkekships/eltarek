@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="delivery_request_root_menu" name="Material Request"/>
+
+    <menuitem id="delivery_request_menu" name="Material Requests"
+              parent="delivery_request_root_menu" action="delivery_request_action"/>
+
+    <menuitem id="purchase_request_menu" name="Purchase Requests"
+              parent="purchase.menu_procurement_management" action="purchase_request_action"/>
+    <!--<menuitem id="purchase_request_stock_menu" name="Purchase Requests"-->
+              <!--parent="stock.menu_stock_root" action="purchase_request_action"/>-->
+</odoo>

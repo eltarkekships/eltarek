@@ -1,0 +1,87 @@
+<odoo>
+    <data>
+        <record id="view_existing_purchase_order_form" model="ir.ui.view">
+            <field name="name">view.existing.purchase.order.form</field>
+            <field name="model">existing.purchase.order</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <group>
+
+                        <field name="purchase_request_id" invisible="1"/>
+                        <field name="purchase_order_ids" options="{'no_create': True, 'no_open': True}" domain="[('state','=','draft')]">
+                            <tree>
+                                <field name="message_unread" invisible="1"/>
+                                <field name="name" string="Reference"/>
+                                <field name="date_order"/>
+                                <field name="partner_id"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                <field name="date_planned" invisible="context.get('quotation_only', False)"/>
+<!--                                <field name="user_id"/>-->
+                                <field name="origin"/>
+                                <field name="amount_untaxed" sum="Total Untaxed amount" string="Untaxed" widget="monetary"/>
+                                <field name="amount_total" sum="Total amount" widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="state"/>
+
+                            </tree>
+                        </field>
+                        <field name="wizard_line_ids">
+                            <tree>
+                                <field name="product_id"/>
+                                <field name="qty"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="add_to_existing_po" string="Confirm" type="object" class="btn-primary"/>
+                        <!--<button name="approve_po_lines" string="Confirm" invisible="not context.get('approve', False)"  type="object" class="btn-primary"/>-->
+                        <!--<button name="cancel_po_lines" string="Confirm" invisible="not context.get('cancel', False)"  type="object" class="btn-primary"/>-->
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="action_existing_rfq" model="ir.actions.act_window">
+            <field name="name">Add Existing RFQ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">existing.purchase.order</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_centione_purchase_request_add_existing_rfq" model="ir.ui.view">
+            <field name="name">view.centione.purchase.request.add.existing.rfq</field>
+            <field name="model">centione.purchase.request</field>
+            <field name="inherit_id" ref="eltarek_delivery_request_generic.delivery_request_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_cancel_all']" position="before">
+                    <button name="%(action_existing_rfq)d" string="Add to Existing RFQ" type="action" class="oe_highlight"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="purchase_order_add_request_smart_button" model="ir.ui.view">
+            <field name="name">purchase.order.add.request.smart.button</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button class="oe_stat_button" type="object"
+                            name="request_orders_action"
+                            icon="fa-list" attrs="{'invisible':[('smart_button_request','=',0)]}">
+                        <field string="Purchase Requests" name="smart_button_request" widget="statinfo"/>
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

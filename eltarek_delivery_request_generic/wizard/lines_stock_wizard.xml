@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+            <record id="view_centione_transfering_location_lines_form" model="ir.ui.view">
+                <field name="name">Transfering/Purchase Lines</field>
+                <field name="model">lines.stock.wizard</field>
+                <field name="arch" type="xml">
+                    <form>
+                        <group>
+                            <field name="location_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="location_dest_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="employee" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="delivery_request_line_ids" options="{'no_create': True, 'no_open': True}"/>
+
+                        </group>
+                        <footer>
+                            <button name="create_centione_transfer" string="Confirm" type="object" class="btn-primary"
+                                    invisible="context.get('hide_internal', False)"/>
+                            <button name="create_centione_purchase" string="Confirm" type="object" class="btn-primary"
+                                    invisible="context.get('hide_purchase', False)"/>
+
+                            <button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </form>
+                </field>
+            </record>
+        
+
+
+            <act_window id="create_transfer_request_lines_action" name="Internal Transfering"
+                    res_model="lines.stock.wizard"
+                    view_mode="form" target="new" context="{'hide_purchase': True}"/>
+
+            <act_window id="create_centione_purchase_lines_action" name="Purchase Request"
+                    res_model="lines.stock.wizard"
+                    view_mode="form" target="new" context="{'hide_internal': True}"/>
+
+    
+    </data>
+</odoo>

@@ -36,6 +36,9 @@ class CentioneProcessRequest(models.TransientModel):
                 'analytic_account_id': delivery_request_line.request_id.analytic_account_id.id,
                 'delivery_request_line_id': delivery_request_line.id,
                 'move_lines': [[0, False, {
+                    'location_id': delivery_request_line.product_id.categ_id.delivery_location_id.id,
+                    'location_dest_id': delivery_request_line.product_id.categ_id.delivery_location_dest_id.id,
+
                     # 'date_expected': fields.Datetime.now(),
                     'product_uom': delivery_request_line.uom_id.id,
                     'product_id': delivery_request_line.product_id.id,

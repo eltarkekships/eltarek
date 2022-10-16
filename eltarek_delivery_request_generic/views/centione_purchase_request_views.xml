@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="delivery_request_view_form" model="ir.ui.view">
+        <field name="name">Purchase Request form view</field>
+        <field name="model">centione.purchase.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(create_rfq_lines_action_2)d" string="Create RFQ" type="action" groups="purchase.group_purchase_user" class="btn-primary" attrs="{'invisible' : [('state', 'in', ('done', 'cancel'))]}"/>
+<!--                    <button name="approve_manager" type="object" string="Manager Approval" attrs="{'invisible' : [('state', 'in', ('approved', 'general approved', 'done', 'cancel'))]}" groups="eltarek_delivery_request_generic.group_purchase_request_manager" class="btn-primary"/>-->
+<!--                    <button name="action_manager_approve" type="object" string="General Manager Approval" attrs="{'invisible' : [('state', 'in', ('open', 'general approved', 'done', 'cancel'))]}" groups="eltarek_delivery_request_generic.group_purchase_request_manager_general" class="btn-primary"/>-->
+<!--                    <button name="action_cancel_by_manager" type="object" string="Cancel By Manager" attrs="{'invisible' : [('state', 'in', ('open', 'general approved', 'done', 'cancel'))]}"  class="btn-primary" groups="eltarek_delivery_request_generic.group_purchase_request_manager"/>-->
+                    <button name="action_cancel_all" type="object" string="Cancel All" attrs="{'invisible' : [('state', 'in', ('done', 'cancel'))]}" class="btn-primary" groups="eltarek_delivery_request_generic.group_purchase_request_manager_general"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                name="request_orders_action"
+                                icon="fa-list" attrs="{'invisible':[('smart_button_request','=',0)]}">
+                            <field string="Purchase Orders" name="smart_button_request" widget="statinfo"/>
+                        </button>
+
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <field name="create_date"/>
+                        <field name="origin" invisible="1"/>
+                        <field name="delivery_request_id"/>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="general_manager_approval_date" readonly="1"/>
+                        <field name="manager_approval_date" readonly="1"/>
+                        <field name="rfq_date" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="purchase_lines_ids"  attrs="{'readonly': [('state', 'in', ['approved', 'done','general approved'])]}">
+                                <tree>
+                                    <field name="state" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <!--<field name="product_arabic_name"/>-->
+                                    <field name="create_uid"/>
+                                    <field name="type"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                    <field name="cost_price"/>
+                                    <field name="planned_date"/>
+                                    <field name="notes"/>
+                                    <field name="purchase_order_ids" widget="many2many_tags" />
+                                    <!--<field name="state"/>-->
+                                    <!--<button name="%(create_po_action)d" string="Create PO from sister company"-->
+                                    <!--context="{'show_single': True}"-->
+                                    <!--type="action"-->
+                                    <!--attrs="{'invisible': ['|', ('type', '!=', 'sister'), ('state', 'in', ['cancel', 'done','draft'])]}"-->
+                                    <!--groups="purchase.group_purchase_user"/>-->
+                                    <!--<button name="%(create_rfq_action)d" string="Create RFQ"-->
+                                    <!--type="action"-->
+                                    <!--attrs="{'invisible': ['|', ('type', '!=', 'normal'), ('state', 'in', ['cancel', 'done','draft'])]}"-->
+                                    <!--groups="purchase.group_purchase_user"/>-->
+                                    <button name="cancel_line" string="Cancel"
+                                            type="object" groups="eltarek_delivery_request_generic.group_purchase_request_manager_general"
+                                            attrs="{'invisible' : ['|',('state', '=', 'manager approved'),('state', '=', 'done')]}"/>
+                                    <!--<button name="manager_approve" string="Manager Approve"-->
+                                    <!--type="object" attrs="{'invisible': [('state', 'in', ['cancel', 'done','approved', 'manager approved'])]}"-->
+                                    <!--groups="eltarek_delivery_request_generic.group_purchase_request_manager"/>-->
+                                    <!--<button name="general_manager_approve" string="General Manager Approve"-->
+                                    <!--type="object" attrs="{'invisible': [('state', 'in', ['cancel', 'done','manager approved'])]}"-->
+                                    <!--groups="eltarek_delivery_request_generic.group_purchase_request_manager_general"/>-->
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="purchase_request_view_tree" model="ir.ui.view">
+        <field name="name">Purchase Request tree view</field>
+        <field name="model">centione.purchase.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="purchase_lines_ids"/>
+                <field name="state"/>
+                <field name="employee_id"/>
+                <field name="manger_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="purchase_request_action" model="ir.actions.act_window">
+        <field name="name">Purchase Requests</field>
+        <field name="res_model">centione.purchase.request</field>
+
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

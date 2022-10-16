@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mail_delivery_request_submit_notification" model="mail.template">
+            <field name="name">Notification when a Delivery Request is submitted</field>
+             <field name="email_from">${user.email}</field>
+            <field name="email_to">${'mails_str' in ctx and ctx['mails_str']}</field>
+            <field name="subject">The delivery request ${object.name} is submitted .</field>
+            <field name="model_id" ref="eltarek_delivery_request_generic.model_centione_delivery_request"/>
+            <field name="use_default_to" eval="False"/>
+            <field name="body_html"><![CDATA[
+<p>Dears,</p>
+<p>The delivery request ${object.name} by employee ${object.employee_id.name} is submitted .<br /></p>
+<p>Best regards,</p>]]></field>
+            <!--<field name="auto_delete" eval="True"/>-->
+        </record>
+
+        <record id="mail_delivery_request_first_approve_notification" model="mail.template">
+            <field name="name">Notification when a Delivery Request is First Approved</field>
+             <field name="email_from">${user.email}</field>
+            <field name="email_to">${'mails_str' in ctx and ctx['mails_str']}</field>
+            <field name="subject">The delivery request ${object.name} is approved by employee manager .</field>
+            <field name="model_id" ref="eltarek_delivery_request_generic.model_centione_delivery_request"/>
+            <field name="use_default_to" eval="False"/>
+            <field name="body_html"><![CDATA[
+<p>Dears,</p>
+<p>The delivery request ${object.name} by employee ${object.employee_id.name} is approved by employee manager .<br /></p>
+<p>Best regards,</p>]]></field>
+            <!--<field name="auto_delete" eval="True"/>-->
+        </record>
+
+        <record id="mail_delivery_request_approve_notification" model="mail.template">
+            <field name="name">Notification to Warehouse manager when a Delivery request is confirmed by Manager</field>
+             <field name="email_from">${user.email}</field>
+            <field name="email_to">${'mails_str' in ctx and ctx['mails_str']}</field>
+            <field name="subject">The delivery request ${object.name} is confirmed by manager .</field>
+            <field name="model_id" ref="eltarek_delivery_request_generic.model_centione_delivery_request"/>
+            <field name="use_default_to" eval="False"/>
+            <field name="body_html"><![CDATA[
+<p>Dears,</p>
+<p>The delivery request ${object.name} is confirmed by manager .<br /></p>
+<p>Best regards,</p>]]></field>
+            <!--<field name="auto_delete" eval="True"/>-->
+        </record>
+
+        <record id="mail_purchase_request_created_notification" model="mail.template">
+            <field name="name">Notification to Procurement Team when Purchase Request is created by the Warehouse Manager</field>
+             <field name="email_from">${user.email}</field>
+            <field name="email_to">${'employee_used_case' in ctx and ctx['employee_used_case']}</field>
+            <field name="subject">The puchase request ${object.name} is created .</field>
+            <field name="model_id" ref="eltarek_delivery_request_generic.model_centione_purchase_request"/>
+            <field name="use_default_to" eval="False"/>
+            <field name="body_html"><![CDATA[
+<p>Dears,</p>
+<p>The purchase request ${object.name} is created .<br /></p>
+<p>Best regards,</p>]]></field>
+            <!--<field name="auto_delete" eval="True"/>-->
+        </record>
+
+
+
+
+    </data>
+</odoo>

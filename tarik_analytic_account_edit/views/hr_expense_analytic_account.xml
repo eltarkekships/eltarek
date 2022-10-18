@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="hr_expense_analytic_account" model="ir.ui.view">
+            <field name="name">hr.expense.analytic.account</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='analytic_account_id']" position="before">
+                    <field name="is_income" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="attrs">{'required': [('is_income', '=', True)]}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

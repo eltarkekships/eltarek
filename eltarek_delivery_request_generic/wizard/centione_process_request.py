@@ -12,8 +12,7 @@ class CentioneProcessRequest(models.TransientModel):
     location_dest_id = fields.Many2one('stock.location', "Destination Location", required=False)
     warehouse_id = fields.Many2one('stock.warehouse', "Warehouse")
     employee = fields.Many2one('hr.employee')
-    requested_amount = fields.Float(string="Requested Amount",  required=False, )
-
+    requested_amount = fields.Float(string="Requested Amount", required=False, )
 
     def create_centione_transfer(self):
         self.ensure_one()
@@ -59,7 +58,6 @@ class CentioneProcessRequest(models.TransientModel):
         else:
             raise ValidationError("There Is No 'Picking Type' Assigned To The Warehouse Of Source Location")
 
-
     def create_centione_purchase(self):
         self.ensure_one()
         self.create_centione_transfer()
@@ -70,13 +68,14 @@ class CentioneProcessRequest(models.TransientModel):
         # delivery_request = self.env['centione.delivery.request'].browse(self.env.context.get('active_id'))
         delivery_request_line = self.env['centione.delivery.request.line'].browse(self.env.context.get('active_id'))
         # purchase_request = self.env['centione.purchase.request'].search([('state', '=', 'open')], limit=1)
-        purchase_request = self.env['centione.purchase.request'].search([('delivery_request_id', '=', delivery_request_line.request_id.id)], limit=1)
+        purchase_request = self.env['centione.purchase.request'].search(
+            [('delivery_request_id', '=', delivery_request_line.request_id.id)], limit=1)
         # picking_type_id = int(self.env['ir.config_parameter'].sudo().get_param('picking_type_purchase_id')) or False
         picking_type_id = delivery_request_line.product_id.picking_type_purchase_id.id or False
         if not purchase_request:
             # delivery_request_line.requested_amount += self.requested_amount
             request_vals = {
-                'origin':delivery_request_line.request_id.name,
+                'origin': delivery_request_line.request_id.name,
                 'delivery_request_id': delivery_request_line.request_id.id,
                 'purchase_lines_ids': [[0, False,
                                         {'product_id': delivery_request_line.product_id.id,
@@ -132,7 +131,6 @@ class ReceiveConfirmation(models.TransientModel):
 
     received_amount = fields.Float('Quantity')
 
-
     def confirm_transferring(self):
         self.ensure_one()
         delivery_request_line = self.env['centione.delivery.request.line'].browse(self.env.context.get('active_id'))
@@ -175,7 +173,9 @@ class ReceiveConfirmation(models.TransientModel):
                     'analytic_account_id': delivery_request_line.request_id.analytic_account_id.id,
                     'quantity_done': self.received_amount,
                     'reserved_availability': self.received_amount,
-                    'state': 'draft'
+                    'state': 'draft',
+                    'location_id': delivery_request_line.broker_warehouse.id,
+                    'location_dest_id': delivery_request_line.request_id.analytic_account_id.location_id.id,
                 }]]
             }
 

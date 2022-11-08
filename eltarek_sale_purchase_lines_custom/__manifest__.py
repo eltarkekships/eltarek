@@ -5,7 +5,7 @@
     'author': "Centione",
     'website': "http://www.centione.com",
 
-    'depends': ['base', 'sale', 'purchase'],
+    'depends': ['base', 'sale', 'purchase', 'account'],
 
     'data': [
         'views/views.xml',

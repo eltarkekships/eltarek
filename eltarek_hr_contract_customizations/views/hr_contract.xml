@@ -22,6 +22,16 @@
                 <xpath expr="//label[@for='wage']" position="attributes">
                       <attribute name="string">أساسي</attribute>
                  </xpath>
+                <xpath expr="//page[@name='information']" position="after">
+                     <page name="allowance" string="Allowance">
+                         <group string="Allowance">
+                             <field name="travel_allwoance"/>
+                             <field name="car_allwoance"/>
+                             <field name="house_allwoance"/>
+                             <field name="other_allwoance"/>
+                         </group>
+                     </page>
+                 </xpath>
             </field>
         </record>
     </data>

@@ -22,6 +22,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/hr_employee.xml',
+        'data/employee_sechdule_action.xml',
     ],
     # only loaded in demonstration mode
     # 'demo': [

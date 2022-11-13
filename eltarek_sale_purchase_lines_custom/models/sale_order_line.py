@@ -7,5 +7,6 @@ class SaleOrderLine(models.Model):
 
     @api.constrains('price_unit')
     def check_price_unit_constrains(self):
-        if self.price_unit <= 0:
-            raise UserError('Price unit must be greater than 0')
+        for rec in self:
+            if rec.price_unit <= 0:
+                raise UserError('Price unit must be greater than 0')

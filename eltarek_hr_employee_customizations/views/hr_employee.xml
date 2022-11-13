@@ -13,6 +13,50 @@
                 <xpath expr="//field[@name='category_ids']" position="before">
                     <field name="hr_code" placeholder="Hr Code"/>
                 </xpath>
+                <xpath expr="//field[@name='category_ids']" position="after">
+                    <group>
+                        <field name="five_precent"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='coach_id']" position="after">
+                        <field name="social_exemption"/>
+                </xpath>
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page name="social_info" string="Social Information" attrs="{'invisible':[('social_exemption','=',False)]}">
+                        <group string="Social Information">
+                            <field name="social_number"/>
+                            <field name="social_date"/>
+                            <field name="social_office"/>
+                            <field name="social_code"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page name="hiring_info" string="Hiring Information">
+                        <group string="Hiring Information">
+                            <field name="hire_date"/>
+                            <field name="end_probation_period"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='identification_id']" position="after">
+                    <field name="date_of_issue"/>
+                    <field name="place_of_issue"/>
+                    <field name="expiary_date"/>
+                </xpath>
+                <xpath expr="//field[@name='bank_account_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='bank_account_id']" position="after">
+                    <field name="payment_method"/>
+                    <field name="prepaid" attrs="{'invisible':[('payment_method','!=','bank')]}"/>
+                    <field name="bank_account_no" attrs="{'invisible':[('payment_method','!=','bank')]}"/>
+                    <field name="branch_id" attrs="{'invisible':[('payment_method','!=','bank')]}"/>
+                    <field name="bank_name" attrs="{'invisible':[('payment_method','!=','bank')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='birthday']" position="after">
+                    <field name="age"/>
+                </xpath>
             </field>
         </record>
     </data>

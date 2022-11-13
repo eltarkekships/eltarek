@@ -24,6 +24,10 @@ class HrContract(models.Model):
     employee_insurance = fields.Float(string="Employee Insurance ", required=False,compute='compute_company_employee_insurance')
     company_insurance = fields.Float(string="Company Inusrance ", required=False,compute='compute_company_employee_insurance' )
     total_company_employee = fields.Float(string="Total ", required=False,compute='compute_company_employee_insurance' )
+    travel_allwoance = fields.Float('Travel Allowance')
+    car_allwoance = fields.Float('Car Allowance')
+    house_allwoance = fields.Float('House Allowance')
+    other_allwoance = fields.Float('Other Allowance')
 
     @api.depends('fixed_insurance')
     def compute_company_employee_insurance(self):

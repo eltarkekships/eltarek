@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <record id="ir_cron_employee_hire_date" model="ir.cron">
+            <field name="name">Employee Hire Date Notify</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.employee_hire_date_monthly_notify()</field>
+        </record>
+
+        <record id="ir_cron_employee_end_probation_period" model="ir.cron">
+            <field name="name">Employee End Probation Period Notify</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.employee_end_probation_period_monthly_notify()</field>
+        </record>
+
+        <record id="ir_cron_expiary_date_monthly_notify" model="ir.cron">
+            <field name="name">Employee Expiary Date Notify</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.expiary_date_monthly_notify()</field>
+        </record>
+
+    </data>
+
+</odoo>

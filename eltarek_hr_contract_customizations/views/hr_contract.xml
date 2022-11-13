@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record id="contract_form_inherit" model="ir.ui.view">
+            <field name="name">contract.form.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="contract_type" />
+                </xpath>
+                <xpath expr="//field[@name='date_end']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('contract_type','=','permnant')]}</attribute>
+                </xpath>
+                 <xpath expr="//group[@name='top_info_left']" position="inside">
+                      <field name="is_insured" />
+                      <field name="fixed_insurance" attrs="{'invisible':[('is_insured','!=',True)]}"  string="Social Salary"/>
+                      <field name="gross_salary" attrs="{'invisible':[('is_insured','!=',True)]}" />
+                      <field name="employee_insurance" attrs="{'invisible':[('is_insured','!=',True)]}" />
+                      <field name="company_insurance" attrs="{'invisible':[('is_insured','!=',True)]}"  />
+                      <field name="total_company_employee" attrs="{'invisible':[('is_insured','!=',True)]}"  />
+                 </xpath>
+                <xpath expr="//label[@for='wage']" position="attributes">
+                      <attribute name="string">أساسي</attribute>
+                 </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

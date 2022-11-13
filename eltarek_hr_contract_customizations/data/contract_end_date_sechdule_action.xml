@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="ir_cron_contract_end_date" model="ir.cron">
+            <field name="name">Contract End Date Notify</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_hr_contract"/>
+            <field name="state">code</field>
+            <field name="code">model.contract_end_date_monthly_notify()</field>
+        </record>
+
+    </data>
+
+</odoo>

@@ -31,7 +31,7 @@ class ExistingPurchaseOrder(models.TransientModel):
                                     'name': line.product_id.name,
                                     'date_planned': fields.Datetime.now(),
                                     'product_uom': line.uom_id.id,
-                                    'price_unit': 0.00,
+                                    'price_unit': 0.01,
                                     'product_qty': line.qty,
                                     'order_id': order.id,
                                 })

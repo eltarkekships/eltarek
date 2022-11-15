@@ -12,6 +12,12 @@
                 </xpath>
                 <xpath expr="//field[@name='category_ids']" position="before">
                     <field name="hr_code" placeholder="Hr Code"/>
+                    <field name="related_is_driver" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='job_id']" position="after">
+                    <field name="heavy_tool_id" attrs="{'invisible':[('related_is_driver','!=','heavy_driver')]}"/>
+                    <field name="truck_tool_id" attrs="{'invisible':[('related_is_driver','!=','truck_driver')]}"/>
+                    <field name="follower_tool_id" attrs="{'invisible':[('related_is_driver','!=','driver_follower')]}"/>
                 </xpath>
                 <xpath expr="//field[@name='category_ids']" position="after">
                     <group>
@@ -28,6 +34,7 @@
                             <field name="social_date"/>
                             <field name="social_office"/>
                             <field name="social_code"/>
+                            <field name="social_company_id"/>
                         </group>
                     </page>
                 </xpath>

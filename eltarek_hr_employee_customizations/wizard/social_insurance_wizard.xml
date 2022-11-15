@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+<!--        <record id="hr_employee_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">hr.employee.form</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="sure_hr_customisation.view_hr_employee_form_custom"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='insurance_end_date']" position="after">-->
+<!--                    <field name="basic_insurance_salary"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+        <record id="excel_Download" model="ir.ui.view">
+            <field name="name">Download</field>
+            <field name="model">report.excel</field>
+            <field name="priority">15</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="file_name" invisible="1"/>
+                            <field name="excel_file" widget="binary" filename="file_name"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="social_insurance_report" model="ir.ui.view">
+            <field name="name">Social Insurance 2 report</field>
+            <field name="model">social.insurance.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <!--                         <field name="image" widget="image" /> -->
+                        <field name="choose_employee"/>
+                        <field name="specific_employee" widget="many2many_tags"
+                               attrs="{'invisible':[('choose_employee','=','all_employees')],'required':[('choose_employee','=','specific_employee')]}"/>
+                    </group>
+                    <footer>
+                        <button name="action_social_insurance_report" string="Generate Report" type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="social_insurance_excel_action" model="ir.actions.act_window">
+            <field name="name">Social Insurance 2 Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">social.insurance.wizard</field>
+            <field name="view_mode">form</field>
+            <!--             <field name="view_type">form</field> -->
+            <field name="target">new</field>
+        </record>
+        <menuitem id="social_insurance_excel_menu" name="Social Insurance 2 Report"
+                  parent="hr.menu_human_resources_configuration" action="social_insurance_excel_action" sequence="102"/>
+    </data>
+</odoo>

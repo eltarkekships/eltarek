@@ -1,1 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_social_insurance_config,access.social.insurance.config,model_social_insurance_config,,1,1,1,1
+access_social_insurance_wizard,access.social.insurance.wizard,model_social_insurance_wizard,,1,1,1,1
+access_report_excel,access.report.excel,model_report_excel,,1,1,1,1
+
+access_heavy_driver_line,access.heavy.driver.line,model_heavy_driver_line,,1,1,1,1
+access_truck_driver_line,access.truck.driver.line,model_truck_driver_line,,1,1,1,1
+access_driver_follower_line,access.driver.follower.line,model_driver_follower_line,,1,1,1,1

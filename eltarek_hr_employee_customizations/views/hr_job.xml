@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <record id="hr_job_driver_follower_form_inherit" model="ir.ui.view">
+            <field name="name">hr.job.driver.follower.form.inherit</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_title']" position="after">
+                    <group>
+                        <field name="is_driver"/>
+                        <field name="is_branched" attrs="{'invisible' : [('is_driver','!=',True)]}"/>
+                        <field name="driver_type" attrs="{'invisible' : [('is_branched','!=',True)]}"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[2]" position="after">
+                    <page string="Heavy Equipment Driver" attrs="{'invisible' : ['|',('is_branched','!=',True),('driver_type','!=','heavy_driver')]}">
+                    <group>
+                        <field name="heavy_driver_ids" >
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="type"/>
+                            </tree>
+                        </field>
+                    </group>
+                     </page>
+                    <page string="Truck Driver" attrs="{'invisible' : ['|',('is_branched','!=',True),('driver_type','!=','truck_driver')]}">
+                    <group>
+                        <field name="truck_driver_ids">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="truck_number"/>
+                            </tree>
+                        </field>
+                    </group>
+                    </page>
+                    <page string="Truck Follower" attrs="{'invisible' : ['|',('is_branched','!=',True),('driver_type','!=','driver_follower')]}">
+                    <group>
+                        <field name="driver_follower_ids" >
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="follower_number"/>
+                            </tree>
+                        </field>
+                    </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

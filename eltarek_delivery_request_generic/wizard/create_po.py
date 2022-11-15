@@ -86,7 +86,7 @@ class CentionePoLines(models.TransientModel):
                     lines.append(tuple([0, False,
                                         {'product_id': product.id,
                                          'product_qty': purchase_request_line.qty,
-                                         'price_unit': product.standard_price,
+                                         'price_unit': purchase_request_line.cost_price,
                                          'product_uom': purchase_request_line.uom_id.id,
                                          'name': product.display_name,
                                          'date_planned': datetime.today().strftime(

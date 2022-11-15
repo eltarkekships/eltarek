@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <record id="social_insurance_config_form" model="ir.ui.view">
+            <field name="name">social.insurance.config.form</field>
+            <field name="model">social.insurance.config</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="social_number"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="social_insurance_config_tree" model="ir.ui.view">
+            <field name="name">social.insurance.config.tree</field>
+            <field name="model">social.insurance.config</field>
+            <field name="arch" type="xml">
+                <tree string="Social Insurance Configuration">
+                    <field name="name"/>
+                    <field name="social_number"/>
+                </tree>
+            </field>
+        </record>
+        <record id="social_insurance_config_action" model="ir.actions.act_window">
+            <field name="name">Social Insurance Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">social.insurance.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="social_insurance_config_menu" name="Social Insurance Configuration"
+                  parent="hr.menu_human_resources_configuration" action="social_insurance_config_action"
+                  sequence="101"/>
+    </data>
+</odoo>

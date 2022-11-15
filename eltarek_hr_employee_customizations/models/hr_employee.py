@@ -29,6 +29,34 @@ class HrEmployee(models.Model):
     branch_id = fields.Char('Branch ID')
     bank_name = fields.Char('Bank Name')
     age = fields.Integer('Age',compute='compute_employee_age')
+    social_company_id = fields.Many2one('social.insurance.config','Social Company')
+    heavy_tool_id = fields.Many2one('heavy.driver.line','Heavy Eguipment Tool')
+    truck_tool_id = fields.Many2one('truck.driver.line','Truck Number')
+    follower_tool_id = fields.Many2one('driver.follower.line','Truck Follower Number')
+    related_is_driver = fields.Selection(related='job_id.driver_type')
+
+    @api.constrains('truck_tool_id')
+    def constrains_truck_number(self):
+        truck = self.env['hr.employee'].search([('id','!=',self.id)])
+        for rec in truck:
+            if rec.truck_tool_id.id == self.truck_tool_id.id:
+                raise ValidationError('Truck Number Must Be Unique')
+
+    @api.constrains('follower_tool_id')
+    def constrains_driver_follower(self):
+        truck = self.env['hr.employee'].search([('id','!=',self.id)])
+        for rec in truck:
+            if rec.follower_tool_id.id == self.follower_tool_id.id:
+                raise ValidationError('Truck Follower Number Must Be Unique')
+    @api.onchange('job_id')
+    def onchange_domain_job(self):
+        if self.related_is_driver == 'heavy_driver':
+            return {'domain': {'heavy_tool_id': [('heavy_driver_id', '=', self.job_id.id)]}}
+        elif self.related_is_driver == 'truck_tool_id':
+            return {'domain': {'heavy_tool_id': [('truck_driver_id', '=', self.job_id.id)]}}
+        elif self.related_is_driver == 'follower_tool_id':
+            return {'domain': {'heavy_tool_id': [('driver_follower_id', '=', self.job_id.id)]}}
+
     @api.depends('birthday')
     def compute_employee_age(self):
         for rec in self:

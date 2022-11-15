@@ -14,15 +14,18 @@
     'author': "Ahmed Abo El Fadl | Centione",
     'website': "http://www.centione.com",
 
-
     # any module necessary for this one to work correctly
-    'depends': ['base','hr'],
+    'depends': ['base', 'hr'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'wizard/social_insurance_wizard.xml',
         'views/hr_employee.xml',
+        'views/social_insurance_config.xml',
+        'views/hr_job.xml',
         'data/employee_sechdule_action.xml',
+
     ],
     # only loaded in demonstration mode
     # 'demo': [

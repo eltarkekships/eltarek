@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+
+        <record id="driver_type_line_view_form" model="ir.actions.act_window">
+            <field name="name">Driver Types</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">driver.type.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+<!--        <menuitem id="menu_hr_document_type"-->
+<!--                  name="Document Types"-->
+<!--                  parent="hr.menu_human_resources_configuration"-->
+<!--                  action="view_hr_document_type"-->
+<!--                  sequence="15"/>-->
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <record id="self_service_group" model="res.groups">
+            <field name="name">Self Service</field>
+        </record>
+        <record id="action_loan_form_view" model="ir.actions.act_window">
+            <field name="name">Employees Loans</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.loan</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+         <record id="view_hr_loan_action" model="ir.actions.server"  >
+            <field name="name">Loan</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="eltarek_hr_loan.model_hr_loan"/>
+            <field name="state">code</field>
+            <field name="code">
+               action = env.get('hr.loan').filter()
+            </field>
+        </record>
+
+        <menuitem
+                id="menu_hr_self_service"
+                name="Self Service"
+                groups="base.group_user"
+        />
+        <menuitem
+                id="menu_hr_loan"
+                name="Loan"
+                action="view_hr_loan_action"
+                parent="menu_hr_self_service"
+                sequence="99"
+        />
+<!--        <record id="view_hr_resignation_action" model="ir.actions.server"  >-->
+<!--            <field name="name">Resignation</field>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="model_id" ref="model_hr_resignation"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">-->
+<!--               action = env.get('hr.resignation').filter()-->
+<!--            </field>-->
+<!--        </record>-->
+<!--        <menuitem-->
+<!--                id="menu_hr_resignation"-->
+<!--                name="Resignations"-->
+<!--                action="view_hr_resignation_action"-->
+<!--                parent="menu_hr_self_service"-->
+<!--                sequence="99"-->
+<!--        />-->
+    </data>
+</odoo>

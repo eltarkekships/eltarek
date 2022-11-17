@@ -3,6 +3,8 @@ access_social_insurance_config,access.social.insurance.config,model_social_insur
 access_social_insurance_wizard,access.social.insurance.wizard,model_social_insurance_wizard,,1,1,1,1
 access_report_excel,access.report.excel,model_report_excel,,1,1,1,1
 
-access_heavy_driver_line,access.heavy.driver.line,model_heavy_driver_line,,1,1,1,1
-access_truck_driver_line,access.truck.driver.line,model_truck_driver_line,,1,1,1,1
-access_driver_follower_line,access.driver.follower.line,model_driver_follower_line,,1,1,1,1
+
+access_driver_line,access.driver.line,model_driver_line,,1,1,1,1
+access_driver_type_line,access.driver.type.line,model_driver_type_line,,1,1,1,1
+access_hr_driver_type,access.hr.driver.type,model_hr_driver_type,,1,1,1,1
+

@@ -8,41 +8,19 @@
                 <xpath expr="//div[@class='oe_title']" position="after">
                     <group>
                         <field name="is_driver"/>
-                        <field name="is_branched" attrs="{'invisible' : [('is_driver','!=',True)]}"/>
-                        <field name="driver_type" attrs="{'invisible' : [('is_branched','!=',True)]}"/>
                     </group>
                 </xpath>
 
                 <xpath expr="//page[2]" position="after">
-                    <page string="Heavy Equipment Driver" attrs="{'invisible' : ['|',('is_branched','!=',True),('driver_type','!=','heavy_driver')]}">
-                    <group>
-                        <field name="heavy_driver_ids" >
-                            <tree editable="bottom">
-                                <field name="name"/>
-                                <field name="type"/>
-                            </tree>
-                        </field>
-                    </group>
-                     </page>
-                    <page string="Truck Driver" attrs="{'invisible' : ['|',('is_branched','!=',True),('driver_type','!=','truck_driver')]}">
-                    <group>
-                        <field name="truck_driver_ids">
-                            <tree editable="bottom">
-                                <field name="name"/>
-                                <field name="truck_number"/>
-                            </tree>
-                        </field>
-                    </group>
-                    </page>
-                    <page string="Truck Follower" attrs="{'invisible' : ['|',('is_branched','!=',True),('driver_type','!=','driver_follower')]}">
-                    <group>
-                        <field name="driver_follower_ids" >
-                            <tree editable="bottom">
-                                <field name="name"/>
-                                <field name="follower_number"/>
-                            </tree>
-                        </field>
-                    </group>
+                    <page string="Driver"
+                          attrs="{'invisible' : [('is_driver','!=',True)]}">
+                        <group>
+                            <field name="driver_line_ids">
+                                <tree>
+                                    <field name="type_id"/>
+                                </tree>
+                            </field>
+                        </group>
                     </page>
                 </xpath>
             </field>

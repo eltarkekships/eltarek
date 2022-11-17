@@ -24,6 +24,8 @@
         'views/hr_employee.xml',
         'views/social_insurance_config.xml',
         'views/hr_job.xml',
+        'views/driver_line.xml',
+        # 'views/driver_type_line.xml',
         'data/employee_sechdule_action.xml',
 
     ],

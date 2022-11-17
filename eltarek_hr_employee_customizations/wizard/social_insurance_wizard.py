@@ -29,6 +29,8 @@ class SocialInsuranceWizard(models.TransientModel):
 
     specific_employee = fields.Many2many('hr.employee', string='Specific Employee')
 
+
+
     def translate_number(self, string):
         h = []
         for m in string:
@@ -56,7 +58,7 @@ class SocialInsuranceWizard(models.TransientModel):
                 dic['social_number'] = self.translate_number(str(m.social_number))
                 dic['identification_id'] = self.translate_number(str(m.identification_id))
                 dic['social_date'] = m.social_date
-                dic['social_company_id'] = m.social_company_id.name
+                # dic['social_company_id'] = m.social_company_id.name
                 # dic['basic_insurance_salary'] = self.translate_number(str(1670))
                 # dic['basic_insurance_salary'] = self.translate_number(str(m.basic_insurance_salary))
                 contract = self.env['hr.contract'].search([('employee_id', '=', m.id), ('state', '=', 'open')], limit=1)
@@ -86,6 +88,21 @@ class SocialInsuranceWizard(models.TransientModel):
         else:
             raise ValidationError(_('No Records To Show'))
 
+    # def prepare_company_data(self):
+    #     comp_list = []
+    #     company = self.env['social.insurance.config'].search([])
+    #     for rec in company:
+    #         comp_list.append(rec.id)
+    #     return comp_list
+    # def employee_company_data(self):
+    #     company = self.prepare_company_data()
+    #     emps = []
+    #     for emp in company:
+    #         emps.append(emp.id)
+    #     return  emps
+
+
+
     def generate_excel(self, data):
 
         filename = 'Social Insurance '
@@ -94,8 +111,8 @@ class SocialInsuranceWizard(models.TransientModel):
         for rec in data:
             all_insurance_amount += rec['all_insurance_amount'] if 'all_insurance_amount' in rec else 0
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        for item in range(0, len(data)):
-            records = data[item:item + 10]
+        for item in range(0,len(data),10):#func (data) #len(self.prepare_company_data())
+            records = data[item:item + 10] #len(self.employee_company_data())
             sheet = workbook.add_worksheet('Social Insurance {}'.format((item / 10) + 1))
             without_borders = workbook.add_format({
                 'bold': 1,

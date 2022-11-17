@@ -12,12 +12,6 @@
                 </xpath>
                 <xpath expr="//field[@name='category_ids']" position="before">
                     <field name="hr_code" placeholder="Hr Code"/>
-                    <field name="related_is_driver" invisible="1"/>
-                </xpath>
-                <xpath expr="//field[@name='job_id']" position="after">
-                    <field name="heavy_tool_id" attrs="{'invisible':[('related_is_driver','!=','heavy_driver')]}"/>
-                    <field name="truck_tool_id" attrs="{'invisible':[('related_is_driver','!=','truck_driver')]}"/>
-                    <field name="follower_tool_id" attrs="{'invisible':[('related_is_driver','!=','driver_follower')]}"/>
                 </xpath>
                 <xpath expr="//field[@name='category_ids']" position="after">
                     <group>
@@ -26,6 +20,11 @@
                 </xpath>
                 <xpath expr="//field[@name='coach_id']" position="after">
                         <field name="social_exemption"/>
+                </xpath>
+                <xpath expr="//field[@name='job_id']" position="after">
+                        <field name="is_driver_rel" invisible="1"/>
+                        <field name="driver_job_id" attrs="{'invisible':[('is_driver_rel','!=',True)]}"/>
+                        <field name="driver_type_job_id" attrs="{'invisible':[('is_driver_rel','!=',True)]}"/>
                 </xpath>
                 <xpath expr="//page[@name='hr_settings']" position="after">
                     <page name="social_info" string="Social Information" attrs="{'invisible':[('social_exemption','=',False)]}">

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <!-- Inherit Form View to Modify it -->
+       <record id="resource_cal_form_inh" model="ir.ui.view">
+           <field name="name">resource.calendar.form.inh</field>
+           <field name="model">resource.calendar.leaves</field>
+           <field name="inherit_id" ref="resource.resource_calendar_leave_form"/>
+           <field name="arch" type="xml">
+
+               <xpath expr="//field[@name='calendar_id']" position="after">
+                   <field name="public_holiday_id" invisible="1"/>
+               </xpath>
+
+           </field>
+       </record>
+
+    </data>
+</odoo>

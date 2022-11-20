@@ -5,10 +5,13 @@
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
+                 <xpath expr="//field[@name='job_title']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
                 <xpath expr="//h1[@class='d-flex']" position="after">
                     <h1>
                         <field name="arabic_name" placeholder="Arabic Name"/>
-                        <field name="old_id"/>
+<!--                        <field name="old_id"/>-->
                     </h1>
                 </xpath>
                 <xpath expr="//field[@name='category_ids']" position="before">

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "ElTarek Over Time",
+    'name': "ELTarek Hr Variable Allowance & Deduction",
 
     'summary': """
-    Module calculates employee overtime
+    module allowance and deuction for employee
         """,
 
     'description': """
-        
     """,
 
     'author': "Centione",
@@ -20,22 +19,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base',
-                'hr',
-                'project',
-                'hr_payroll',
-                'hr_contract',
-                'eltarek_hr_payroll_base',
-                'hr_work_entry_contract',
-                'hr_attendance','eltarek_hr_public_holidays'],
+    'depends': ['hr_contract', 'eltarek_hr_payroll_base','hr_work_entry_contract_enterprise'],
 
     # always loaded
     'data': [
-        'data/hr_payslip_input_type.xml',
-        'data/salary_rules.xml',
-        'views/over_time.xml',
-        'views/over_time_configuration.xml',
+        'views/hr_variable_allowance_deduction.xml',
+        'views/hr_variable_allowance_deduction_type.xml',
         'security/ir.model.access.csv',
     ],
-
 }

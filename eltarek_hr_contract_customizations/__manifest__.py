@@ -9,9 +9,9 @@
     'author': "Ahmed Abo El Fadl | Centione",
     'website': "http://www.centione.com",
 
-
     # any module necessary for this one to work correctly
-    'depends': ['base','hr','hr_contract','hr_work_entry_contract_enterprise','hr_payroll','eltarek_hr_payroll_base','hr_payroll_account'],
+    'depends': ['base', 'hr', 'hr_contract', 'hr_work_entry_contract_enterprise', 'hr_payroll',
+                'eltarek_hr_payroll_base', 'hr_payroll_account', 'eltarek_hr_employee_customizations'],
 
     # always loaded
     'data': [

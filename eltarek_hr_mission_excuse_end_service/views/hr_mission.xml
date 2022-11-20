@@ -30,6 +30,8 @@
                         <group>
                             <field name="employee_id" options="{'no_create':True,'no_create_edit':True}" required="1"
                                    groups="hr.group_hr_user" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="mission_id"/>
+                            <field name="value"/>
                         </group>
                         <group>
                             <field name="start_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>

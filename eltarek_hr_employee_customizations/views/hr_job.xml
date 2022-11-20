@@ -12,7 +12,7 @@
                 </xpath>
 
                 <xpath expr="//page[2]" position="after">
-                    <page string="Driver"
+                    <page string="Branched"
                           attrs="{'invisible' : [('is_driver','!=',True)]}">
                         <group>
                             <field name="driver_line_ids">

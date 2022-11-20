@@ -14,6 +14,7 @@
                          <group>
                              <field name="morning_start_hour"/>
                              <field name="night_start_hour"/>
+                             <field name="maximum_over_hour"/>
                          </group>
                          <group>
                              <field name="daily_rate"/>

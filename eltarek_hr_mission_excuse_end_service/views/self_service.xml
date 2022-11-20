@@ -22,7 +22,7 @@
         <menuitem
                 id="menu_hr_self_service"
                 name="Self Service"
-                groups="base.group_user"
+                groups="eltarek_hr_self_service.self_service_group"
         />
         <menuitem
                 id="menu_hr_loan"

@@ -6,32 +6,41 @@
             <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='employee_id']" position="after">
-                    <field name="contract_type" />
+                    <field name="contract_type"/>
+                    <field name="five_percent_rel"/>
+                    <field name="hr_code_rel"/>
                 </xpath>
                 <xpath expr="//field[@name='date_end']" position="attributes">
                     <attribute name="attrs">{'invisible':[('contract_type','=','permnant')]}</attribute>
                 </xpath>
-                 <xpath expr="//group[@name='top_info_left']" position="inside">
-                      <field name="is_insured" />
-                      <field name="fixed_insurance" attrs="{'invisible':[('is_insured','!=',True)]}"  string="Social Salary"/>
-                      <field name="gross_salary" attrs="{'invisible':[('is_insured','!=',True)]}" />
-                      <field name="employee_insurance" attrs="{'invisible':[('is_insured','!=',True)]}" />
-                      <field name="company_insurance" attrs="{'invisible':[('is_insured','!=',True)]}"  />
-                      <field name="total_company_employee" attrs="{'invisible':[('is_insured','!=',True)]}"  />
-                 </xpath>
+                <xpath expr="//page[@name='information']" position="inside">
+                    <group>
+                        <field name="num_work_day_per_month"/>
+                        <field name="num_work_hour_per_day"/>
+                        <field name="day_value"/>
+                        <field name="hour_value"/>
+                        <field name="is_insured"/>
+                        <field name="fixed_insurance" attrs="{'invisible':[('is_insured','!=',True)]}"
+                               string="Social Salary"/>
+                        <field name="gross_salary" attrs="{'invisible':[('is_insured','!=',True)]}"/>
+                        <field name="employee_insurance" attrs="{'invisible':[('is_insured','!=',True)]}"/>
+                        <field name="company_insurance" attrs="{'invisible':[('is_insured','!=',True)]}"/>
+                        <field name="total_company_employee" attrs="{'invisible':[('is_insured','!=',True)]}"/>
+                    </group>
+                </xpath>
                 <xpath expr="//label[@for='wage']" position="attributes">
-                      <attribute name="string">أساسي</attribute>
-                 </xpath>
+                    <attribute name="string">أساسي</attribute>
+                </xpath>
                 <xpath expr="//page[@name='information']" position="after">
-                     <page name="allowance" string="Allowance">
-                         <group string="Allowance">
-                             <field name="travel_allwoance"/>
-                             <field name="car_allwoance"/>
-                             <field name="house_allwoance"/>
-                             <field name="other_allwoance"/>
-                         </group>
-                     </page>
-                 </xpath>
+                    <page name="allowance" string="Allowance">
+                        <group string="Allowance">
+                            <field name="travel_allwoance"/>
+                            <field name="car_allwoance"/>
+                            <field name="house_allwoance"/>
+                            <field name="other_allwoance"/>
+                        </group>
+                    </page>
+                </xpath>
             </field>
         </record>
     </data>

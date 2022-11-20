@@ -22,10 +22,12 @@
     # any module necessary for this one to work correctly
     'depends': ['base',
                 'hr',
+                'project',
+                'hr_payroll',
                 'hr_contract',
                 'eltarek_hr_payroll_base',
                 'hr_work_entry_contract',
-                'hr_attendance','eltarek_hr_self_service','eltarek_hr_public_holidays'],
+                'hr_attendance','eltarek_hr_public_holidays'],
 
     # always loaded
     'data': [

@@ -1,17 +1,43 @@
 from odoo import models, fields, api, _
 import re
 from odoo.exceptions import ValidationError, AccessError
-
+from dateutil.relativedelta import relativedelta
 
 class HrMission(models.Model):
     _name = 'hr.mission'
     # _inherit = 'hr.self.service'
     _inherit = ['hr.self.service', 'mail.thread', 'mail.activity.mixin']
 
+
+
     start_date = fields.Datetime()
     end_date = fields.Datetime()
     period = fields.Float(compute='_compute_period')
     name = fields.Char(default='Mission')
+    mission_id = fields.Many2one('mission.config')
+    value = fields.Float('Value')
+
+    @api.onchange('mission_id')
+    def onchange_value(self):
+        if self.mission_id:
+            if self.employee_id.is_manager == True:
+                self.value = self.mission_id.manager_value
+            else:
+                self.value = self.mission_id.emp_value
+
+
+    @api.onchange('start_date')
+    def onchange_start(self):
+        if  self.start_date:
+            start_hour = self.start_date.replace(hour=22,microsecond=0, second=0, minute=0)
+            self.start_date = start_hour
+
+
+    @api.onchange('end_date')
+    def onchange_end(self):
+        if  self.end_date:
+            end_hour = self.end_date.replace(hour=21,microsecond=59, second=59, minute=59)
+            self.end_date = end_hour
 
     def filter(self):
         domain = []
@@ -46,7 +72,14 @@ class HrMission(models.Model):
         for rec in self:
             rec.period = 0
             if rec.end_date and rec.start_date:
-                rec.period = (rec.end_date - rec.start_date).total_seconds() / 3600.0
+                if rec.employee_id.is_manager == True:
+                    days = (rec.end_date - rec.start_date).days
+                    manager_mission = (days - 2) * 1
+                    rec.period = manager_mission + 2
+                else:
+                    days = (rec.end_date - rec.start_date).days
+                    worker_mission = (days - 2) * 0.5
+                    rec.period = worker_mission + 2
 
     def validate(self):
         super(HrMission, self).validate()

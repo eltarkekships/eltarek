@@ -13,3 +13,10 @@ class SocialInsuranceConfig(models.Model):
 
     name = fields.Char('Name')
     social_number = fields.Char('Social Number')
+
+    @api.constrains('social_number')
+    def constrains_truck_number(self):
+        truck = self.env['social.insurance.config'].search([('id','!=',self.id)])
+        for rec in truck:
+            if rec.social_number == self.social_number:
+                raise ValidationError('Social Number Must Be Unique')

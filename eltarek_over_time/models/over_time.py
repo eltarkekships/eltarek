@@ -2,7 +2,7 @@
 from odoo import fields, models, api, _
 from datetime import datetime, timedelta
 import math
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError,ValidationError
 import re
 
 
@@ -21,6 +21,15 @@ class OverTime(models.Model):
 
     date_to = fields.Datetime(string="Date To")
 
+    @api.constrains('morning_hours','night_hours','holiday_hours')
+    def check_overtime_config(self):
+        maximum_overtime = self.env['over.time.configuration'].search([],limit=1,order='create_date desc').sudo().mapped('maximum_over_hour')
+        maximum_overtime_str = ' '.join(str(h) for h in maximum_overtime)
+        total_hours = self.night_hours + self.morning_hours + self.holiday_hours
+        if float(maximum_overtime_str) > total_hours:
+            raise ValidationError(_('Cannot Exceed Maximum Overtime Hour'))
+
+
     @api.constrains('date_from', 'date_to')
     def _check_dates_from_to(self):
         if self.date_from and self.date_to:
@@ -29,7 +38,7 @@ class OverTime(models.Model):
 
     project_id = fields.Many2one('project.project', required=True)
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee", required=True, )
-    code = fields.Char(string='Code',related='employee_id.old_id',store=True)
+    # code = fields.Char(string='Code',related='employee_id.old_id',store=True)
     state = fields.Selection(string="", selection=[('draft', 'Draft'), ('approved', 'Approved'), ('done', 'Done')],
                              default='draft')
     company_id = fields.Many2one(comodel_name="res.company")
@@ -211,29 +220,29 @@ class OverTime(models.Model):
         for rec in self:
             rec.write({'state': 'approved'})
 
-    def filter(self):
-        domain = []
-        employees = self.env['hr.employee'].search([])
-        overtimes = self.env['over.time'].search([('employee_id', 'in', employees.ids)])
-        ids = []
-        for exc in overtimes:
-            for appr in exc.sudo().employee_id.holidays_approvers:
-                if self.env.uid == appr.approver.user_id.id:
-                    ids.append(exc.id)
+    # def filter(self):
+    #     domain = []
+    #     employees = self.env['hr.employee'].search([])
+    #     overtimes = self.env['over.time'].search([('employee_id', 'in', employees.ids)])
+    #     ids = []
+    #     for exc in overtimes:
+    #         for appr in exc.sudo().employee_id.holidays_approvers:
+    #             if self.env.uid == appr.approver.user_id.id:
+    #                 ids.append(exc.id)
 
         # a = re.search("^admin", self.env.user.login)
         # print('aaaaaaaa')
-        if self.env.user.has_group('sure_hr_self_service.self_service_group'):
-            domain = ['|', ('employee_id.user_id', '=', self.env.uid),
-                      ('id', 'in', ids)]
-        if re.search("^admin", self.env.user.login):
-            domain = []
-        return {
-            'name': _("Over Time"),
-            'type': 'ir.actions.act_window',
-            'res_model': 'over.time',
-            'view_mode': 'tree,form',
-            # 'view_type': 'form',
-            'target': 'current',
-            'domain': domain,
-        }
+        # if self.env.user.has_group('sure_hr_self_service.self_service_group'):
+        #     domain = ['|', ('employee_id.user_id', '=', self.env.uid),
+        #               ('id', 'in', ids)]
+        # if re.search("^admin", self.env.user.login):
+        #     domain = []
+        # return {
+        #     'name': _("Over Time"),
+        #     'type': 'ir.actions.act_window',
+        #     'res_model': 'over.time',
+        #     'view_mode': 'tree,form',
+        #     # 'view_type': 'form',
+        #     'target': 'current',
+        #     'domain': domain,
+        # }

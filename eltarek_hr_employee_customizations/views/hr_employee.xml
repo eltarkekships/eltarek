@@ -5,9 +5,13 @@
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
+                 <xpath expr="//field[@name='job_title']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
                 <xpath expr="//h1[@class='d-flex']" position="after">
                     <h1>
                         <field name="arabic_name" placeholder="Arabic Name"/>
+<!--                        <field name="old_id"/>-->
                     </h1>
                 </xpath>
                 <xpath expr="//field[@name='category_ids']" position="before">
@@ -16,15 +20,18 @@
                 <xpath expr="//field[@name='category_ids']" position="after">
                     <group>
                         <field name="five_precent"/>
+                        <field name="is_manager"/>
                     </group>
                 </xpath>
                 <xpath expr="//field[@name='coach_id']" position="after">
-                        <field name="social_exemption"/>
-                </xpath>
-                <xpath expr="//field[@name='job_id']" position="after">
-                        <field name="is_driver_rel" invisible="1"/>
+                    <field name="job_id"/>
+                     <field name="is_driver_rel" invisible="1"/>
                         <field name="driver_job_id" attrs="{'invisible':[('is_driver_rel','!=',True)]}"/>
                         <field name="driver_type_job_id" attrs="{'invisible':[('is_driver_rel','!=',True)]}"/>
+                        <field name="social_exemption"/>
+                </xpath>
+                <xpath expr="//page[@name='hr_settings']//field[@name='job_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//page[@name='hr_settings']" position="after">
                     <page name="social_info" string="Social Information" attrs="{'invisible':[('social_exemption','=',False)]}">

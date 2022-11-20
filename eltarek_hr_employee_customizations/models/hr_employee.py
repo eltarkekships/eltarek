@@ -31,8 +31,10 @@ class HrEmployee(models.Model):
     age = fields.Integer('Age',compute='compute_employee_age')
     social_company_id = fields.Many2one('social.insurance.config','Social Company')
     is_driver_rel = fields.Boolean(related='job_id.is_driver')
-    driver_job_id = fields.Many2one('driver.line')
+    driver_job_id = fields.Many2one('driver.line','Branched')
     driver_type_job_id = fields.Many2one('driver.type.line','Truck Number')
+    # old_id = fields.Char(string='Code', default='0')
+    is_manager = fields.Boolean('Management')
 
     @api.constrains('driver_type_job_id')
     def constrains_truck_number(self):

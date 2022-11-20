@@ -28,6 +28,33 @@ class HrContract(models.Model):
     car_allwoance = fields.Float('Car Allowance')
     house_allwoance = fields.Float('House Allowance')
     other_allwoance = fields.Float('Other Allowance')
+    five_percent_rel = fields.Boolean(related='employee_id.five_precent')
+    hr_code_rel = fields.Char(related='employee_id.hr_code')
+    num_work_day_per_month = fields.Float('Day Per Month')
+    num_work_hour_per_day = fields.Float('Hour Per Day')
+    day_value = fields.Float('Day Value',compute='compute_day_value')
+    hour_value = fields.Float('Hour Value',compute='compute_hour_value')
+
+    @api.depends('num_work_day_per_month')
+    def compute_day_value(self):
+        for rec in self:
+            if rec.num_work_day_per_month:
+                wage_per_day = rec.wage / rec.num_work_day_per_month
+                rec.day_value = wage_per_day
+            else:
+                rec.day_value = 0
+
+
+    @api.depends('num_work_hour_per_day')
+    def compute_hour_value(self):
+        for rec in self:
+            if rec.num_work_hour_per_day:
+                per_hour = (rec.num_work_day_per_month * rec.num_work_hour_per_day)
+                wage_per_hour = rec.wage / per_hour
+                rec.hour_value = wage_per_hour
+            else:
+                rec.hour_value = 0
+
 
     @api.depends('fixed_insurance')
     def compute_company_employee_insurance(self):

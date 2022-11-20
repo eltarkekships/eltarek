@@ -1,0 +1,84 @@
+<odoo>
+    <data>
+
+        <record id="hr_excuse_view_search" model="ir.ui.view">
+            <field name="name">hr.excuse.search</field>
+            <field name="model">hr.excuse</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="employee_id"/>
+                    <searchpanel>
+                        <field name="state" string="Status"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_hr_excuse_form" model="ir.ui.view">
+            <field name="name">hr excuse form</field>
+            <field name="model">hr.excuse</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" readonly="1" widget="statusbar" statusbar_visible="approve,validate"/>
+                        <button name="draft" type="object" string="Draft" states="approve,validate,refuse"/>
+                        <button name="approve" type="object" string="Approve" class="oe_highlight" states="draft"/>
+                        <button name="validate" type="object" string="Validate" class="oe_highlight" states="approve"/>
+                        <button name="refuse" type="object" string="Refuse" states="approve,validate"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="employee_id" required="1" groups="hr.group_hr_user"
+                                   attrs="{'readonly':[('state','!=','draft')]}"
+                                   options="{'no_create':True,'no_create_edit':True}"/>
+                        </group>
+                        <group>
+                            <field name="start_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="period"/>
+                        </group>
+                        <group>
+                            <field name="comment" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_excuse_tree" model="ir.ui.view">
+            <field name="name">view hr excuse tree</field>
+            <field name="model">hr.excuse</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_excuse">
+            <field name="name">Excuses</field>
+            <field name="res_model">hr.excuse</field>
+        </record>
+
+        <record id="server_action_hr_excuse" model="ir.actions.server">
+            <field name="name">Excuses</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_hr_excuse"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = env.get('hr.excuse').filter()
+            </field>
+        </record>
+
+        <menuitem
+                id="menu_hr_excuse"
+                name="Excuses"
+                action="server_action_hr_excuse"
+                parent="hr_holidays.menu_hr_holidays_root"
+        />
+    </data>
+</odoo>

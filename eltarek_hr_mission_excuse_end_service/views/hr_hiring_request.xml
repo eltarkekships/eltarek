@@ -1,0 +1,100 @@
+<odoo>
+    <data>
+        <record id="view_hr_hiring_request_form" model="ir.ui.view">
+            <field name="name">view_hr_hiring_request_form</field>
+            <field name="model">hr.hiring.request</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="open" string="Draft" type="object" class="oe_highlight" states="cancel"/>
+                        <button name="done" string="Approve" type="object" class="oe_highlight" states="open"/>
+                        <button name="cancel" string="Refuse" type="object" states="open"/>
+                        <field name="state" readonly="1" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="employee_id" required="1" options="{'no_create':True,'no_create_edit':True,'no_open':True}" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="date" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="number_of_vacancies" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        </group>
+                        <group string="Job">
+                            <field name="job_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="department_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        </group>
+                        <group>
+                            <group string="Education and Experience">
+                                <field name="educational_degree" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                <field name="years_of_experience" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            </group>
+                            <group string="Salary">
+                                <field name="salary" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            </group>
+                        </group>
+                        <group string="Others">
+                            <field name="require_travel" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="type" string="This request is" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="job_requirements" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Applications">
+                                <field name="application_ids">
+                                    <tree create="0">
+                                        <field name="name"/>
+                                        <field name="partner_name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_hiring_request_tree" model="ir.ui.view">
+            <field name="name">view_hr_hiring_request_tree</field>
+            <field name="model">hr.hiring.request</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee_id" readonly="1"/>
+                    <field name="job_id"/>
+                    <field name="department_id"/>
+                    <field name="date"/>
+                    <field name="number_of_vacancies"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="hr_applicant_view_form" model="ir.ui.view">
+            <field name="name">hr.applicant.view.form</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='source_id']" position="after">
+                    <field name="hiring_request_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_hiring_request_action" model="ir.actions.act_window">
+            <field name="name">Hiring request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.hiring.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_hr_hiring_action" model="ir.actions.server"  >
+            <field name="name">Hiring Request</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_hr_hiring_request"/>
+            <field name="state">code</field>
+            <field name="code">
+               action = env.get('hr.hiring.request').filter()
+            </field>
+        </record>
+
+        <menuitem id="menu_hr_hiring_request" name="Hiring Request" parent="menu_hr_self_service"
+                  action="view_hr_hiring_action"/>
+
+
+    </data>
+</odoo>

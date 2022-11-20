@@ -10,7 +10,7 @@ class OverTimeConfiguration(models.TransientModel):
 
     morning_start_hour = fields.Integer(default=5, store=True)
     night_start_hour = fields.Integer(compute='_compute_night_start_hour', store=True)
-
+    maximum_over_hour = fields.Float('Maximum Overtime Hour')
     daily_rate = fields.Float(string="Morning Overtime Rate", required=False, )
     night_rate = fields.Float(string="Night Overtime Rate", required=False, )
     holiday_rate = fields.Float(string="Holiday Overtime Rate", required=False, )

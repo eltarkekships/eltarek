@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="tree_mission_config_view" model="ir.ui.view">
+            <field name="name">tree.mission.config.view</field>
+            <field name="model">mission.config</field>
+            <field name="arch" type="xml">
+                <tree string="Mission Configuration">
+                    <field name="city"/>
+                    <field name="value"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_mission_config_view" model="ir.actions.act_window">
+            <field name="name">Mission Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mission.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="menu_mission_config_view" name="Mission Configuration" parent="hr.menu_human_resources_configuration" action="action_mission_config_view" sequence="100"/>
+    </data>
+</odoo>
+
+
+

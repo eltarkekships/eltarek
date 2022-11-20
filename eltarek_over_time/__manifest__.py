@@ -22,6 +22,8 @@
     # any module necessary for this one to work correctly
     'depends': ['base',
                 'hr',
+                'project',
+                'hr_payroll',
                 'hr_contract',
                 'eltarek_hr_payroll_base',
                 'hr_work_entry_contract',

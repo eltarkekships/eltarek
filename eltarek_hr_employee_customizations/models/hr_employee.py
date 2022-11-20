@@ -34,6 +34,7 @@ class HrEmployee(models.Model):
     driver_job_id = fields.Many2one('driver.line')
     driver_type_job_id = fields.Many2one('driver.type.line','Truck Number')
     old_id = fields.Char(string='Code', default='0')
+    is_manager = fields.Boolean('Management')
 
     @api.constrains('driver_type_job_id')
     def constrains_truck_number(self):

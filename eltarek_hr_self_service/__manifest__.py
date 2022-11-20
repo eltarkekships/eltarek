@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['hr_holidays', 'hr_payroll',
+    'depends': ['hr_holidays', 'hr_payroll','hr',
                 'eltarek_hr_loan',
                 'hr_work_entry_contract','hr_recruitment','eltarek_hr_end_service'],
 
@@ -32,6 +32,7 @@
         'views/hr_mission.xml',
         'views/hr_employee.xml',
         'views/hr_transport_rate.xml',
+        'views/mission_config.xml',
         'security/ir.model.access.csv',
     ],
 }

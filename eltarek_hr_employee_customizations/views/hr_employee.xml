@@ -17,6 +17,7 @@
                 <xpath expr="//field[@name='category_ids']" position="after">
                     <group>
                         <field name="five_precent"/>
+                        <field name="is_manager"/>
                     </group>
                 </xpath>
                 <xpath expr="//field[@name='coach_id']" position="after">

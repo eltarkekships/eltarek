@@ -2,7 +2,7 @@
 from odoo import fields, models, api, _
 from datetime import datetime, timedelta
 import math
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError,ValidationError
 import re
 
 
@@ -20,6 +20,15 @@ class OverTime(models.Model):
             self.date_to = self.date_from
 
     date_to = fields.Datetime(string="Date To")
+
+    @api.constrains('morning_hours','night_hours','holiday_hours')
+    def check_overtime_config(self):
+        maximum_overtime = self.env['over.time.configuration'].search([]).sudo().mapped('maximum_over_hour')
+        maximum_overtime_str = ' '.join(str(h) for h in maximum_overtime)
+        total_hours = self.night_hours + self.morning_hours + self.holiday_hours
+        if float(maximum_overtime_str) > total_hours:
+            raise ValidationError(_('Cannot Exceed Maximum Overtime Hour'))
+
 
     @api.constrains('date_from', 'date_to')
     def _check_dates_from_to(self):

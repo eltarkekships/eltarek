@@ -48,6 +48,13 @@ class SocialInsuranceWizard(models.TransientModel):
         if self.choose_employee == 'all_employees':
             employee = self.env['hr.employee'].search([(1, '=', 1)])
             employee = employee.sorted(key=lambda r: int(r.social_number))
+            for rec in employee:
+                if rec.social_company_id:
+                    for line in employee.social_company_id:
+                        if rec.social_company_id.id == line.id:
+                            break
+                        else:
+                            raise ValidationError('Employees must be in one company')
         else:
             employee = self.specific_employee
             employee = employee.sorted(key=lambda r: int(r.social_number))
@@ -58,6 +65,7 @@ class SocialInsuranceWizard(models.TransientModel):
                 dic['social_number'] = self.translate_number(str(m.social_number))
                 dic['identification_id'] = self.translate_number(str(m.identification_id))
                 dic['social_date'] = m.social_date
+                dic['social_company_id'] = m.social_company_id.social_number
                 # dic['social_company_id'] = m.social_company_id.name
                 # dic['basic_insurance_salary'] = self.translate_number(str(1670))
                 # dic['basic_insurance_salary'] = self.translate_number(str(m.basic_insurance_salary))
@@ -88,18 +96,8 @@ class SocialInsuranceWizard(models.TransientModel):
         else:
             raise ValidationError(_('No Records To Show'))
 
-    # def prepare_company_data(self):
-    #     comp_list = []
-    #     company = self.env['social.insurance.config'].search([])
-    #     for rec in company:
-    #         comp_list.append(rec.id)
-    #     return comp_list
-    # def employee_company_data(self):
-    #     company = self.prepare_company_data()
-    #     emps = []
-    #     for emp in company:
-    #         emps.append(emp.id)
-    #     return  emps
+
+
 
 
 
@@ -111,8 +109,8 @@ class SocialInsuranceWizard(models.TransientModel):
         for rec in data:
             all_insurance_amount += rec['all_insurance_amount'] if 'all_insurance_amount' in rec else 0
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        for item in range(0,len(data),10):#func (data) #len(self.prepare_company_data())
-            records = data[item:item + 10] #len(self.employee_company_data())
+        for item in range(0,len(data),10):
+            records = data[item:item+10]
             sheet = workbook.add_worksheet('Social Insurance {}'.format((item / 10) + 1))
             without_borders = workbook.add_format({
                 'bold': 1,
@@ -162,7 +160,6 @@ class SocialInsuranceWizard(models.TransientModel):
             sheet.merge_range('Y3:AG3', 'منطقة :شرق مدينة نصر', font_size_10)
             sheet.merge_range('Y4:AG4', 'مكتب : مدينة نصر اول', font_size_10)
             sheet.merge_range('M2:P2', 'رقم المنشأة :', font_size_10)
-            sheet.merge_range('M3:R3', 'رقم التأميى للشركة :', font_size_10)
             sheet.merge_range('F4:W4',
                               '	طلب إشتراك منشأة أو إخطار تعديل بيانات المؤمن عليهم وأجورهم في   /    /     ٢٠ م',
                               font_size_10)
@@ -266,13 +263,11 @@ class SocialInsuranceWizard(models.TransientModel):
             sheet.write('C13', 'جنيه', font_size_11)
             sheet.write('B13', 'قرش', font_size_11)
             sheet.write('A13', 'جنيه', font_size_11)
-            sheet.write('A2', '3', font_size_11)
-            sheet.write('B2', '2', font_size_11)
-            sheet.write('C2', '0', font_size_11)
-            sheet.write('D2', '3', font_size_11)
-            sheet.write('E2', '9', font_size_11)
-            sheet.write('F2', '4', font_size_11)
-            sheet.write('G2', '0', font_size_11)
+            column = 0
+            for line in str(data[0]['social_company_id']):
+                sheet.write(1, column,line ,font_size_11)
+                column += 1
+
             full_path = os.path.realpath(__file__)
 
             print("This file directory only")

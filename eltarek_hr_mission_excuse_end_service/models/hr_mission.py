@@ -21,19 +21,28 @@ class HrMission(models.Model):
     def compute_payslip_checked(self):
         mission = self.env['hr.mission'].search([])
         payslip = self.env['hr.payslip'].search([],order='create_date desc',limit=1)
-        if payslip:
-            total_pay = 0
+        if mission:
             for rec in mission:
-                total_pay += rec.value
-                for line in payslip.line_ids:
-                    if line.code == 'MVSR':
-                        if line.amount == total_pay:
-                            rec.payslip_checked = True
-                            break
-                        else:
-                            rec.payslip_checked = False
+                if payslip:
+                    rec.payslip_checked = True
+                else:
+                    rec.payslip_checked = False
         else:
             self.payslip_checked = False
+
+
+        # if payslip:
+        #     for rec in mission:
+        #         total_pay = rec.value
+        #         for line in payslip.line_ids:
+        #             if line.code == 'MVSR':
+        #                 if line.amount == total_pay:
+        #                     rec.payslip_checked = True
+        #                 else:
+        #                     rec.payslip_checked = False
+        #                 break
+        # else:
+        #     self.payslip_checked = False
 
 
 

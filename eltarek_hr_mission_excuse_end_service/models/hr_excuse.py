@@ -15,32 +15,32 @@ class HrExcuse(models.Model):
 
     name = fields.Char(default='Excuse')
 
-    def filter(self):
-        domain = []
-        employees = self.env['hr.employee'].search([])
-        excuses = self.env['hr.excuse'].search([('employee_id', 'in', employees.ids)])
-        ids = []
-        for exc in excuses:
-            for appr in exc.sudo().employee_id.holidays_approvers:
-                if self.env.uid == appr.approver.user_id.id:
-                    ids.append(exc.id)
-
-        # a = re.search("^admin", self.env.user.login)
-        print('aaaaaaaa')
-        if self.env.user.has_group('sure_hr_self_service.self_service_group'):
-            domain = ['|', ('employee_id.user_id', '=', self.env.uid),
-                      ('id', 'in', ids)]
-        if re.search("^admin", self.env.user.login):
-            domain = []
-        return {
-            'name': _("HR Excuse"),
-            'type': 'ir.actions.act_window',
-            'res_model': 'hr.excuse',
-            'view_mode': 'tree,form',
-            # 'view_type': 'form',
-            'target': 'current',
-            'domain': domain,
-        }
+    # def filter(self):
+    #     domain = []
+    #     employees = self.env['hr.employee'].search([])
+    #     excuses = self.env['hr.excuse'].search([('employee_id', 'in', employees.ids)])
+    #     ids = []
+    #     for exc in excuses:
+    #         for appr in exc.sudo().employee_id.holidays_approvers:
+    #             if self.env.uid == appr.approver.user_id.id:
+    #                 ids.append(exc.id)
+    #
+    #     # a = re.search("^admin", self.env.user.login)
+    #     print('aaaaaaaa')
+    #     if self.env.user.has_group('sure_hr_self_service.self_service_group'):
+    #         domain = ['|', ('employee_id.user_id', '=', self.env.uid),
+    #                   ('id', 'in', ids)]
+    #     if re.search("^admin", self.env.user.login):
+    #         domain = []
+    #     return {
+    #         'name': _("HR Excuse"),
+    #         'type': 'ir.actions.act_window',
+    #         'res_model': 'hr.excuse',
+    #         'view_mode': 'tree,form',
+    #         # 'view_type': 'form',
+    #         'target': 'current',
+    #         'domain': domain,
+    #     }
 
     # def leave_page(self):  # hr_holidays.menu_hr_holidays_approvals
     #     menu_id = self.env.ref('hr_holidays.menu_hr_holidays_root')

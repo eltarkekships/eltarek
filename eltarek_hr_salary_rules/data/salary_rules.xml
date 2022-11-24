@@ -1,0 +1,66 @@
+<odoo>
+    <record id="weekly_basic_salary_rule" model="hr.salary.rule">
+        <field name="name">Weekly Basic Salary</field>
+        <field name="code">WBSR</field>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.basic_salary_rule(payslip)</field>
+    </record>
+
+
+    <record id="mission_value_salary_rule" model="hr.salary.rule">
+        <field name="name">Mission Value</field>
+        <field name="code">MVSR</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = employee.mission_employee_value(payslip)</field>
+    </record>
+
+    <record id="overtime_hours_salary_rule" model="hr.salary.rule">
+        <field name="name">Overtime Total Hours</field>
+        <field name="code">OTHSR</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = employee.overtime_total_hours(payslip,contract)</field>
+    </record>
+
+    <record id="travel_allowance_salary_rule" model="hr.salary.rule">
+        <field name="name">Travel Allowance</field>
+        <field name="code">TASR</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.travel_allowance_weekly_monthly(payslip)</field>
+    </record>
+
+    <record id="car_allowance_salary_rule" model="hr.salary.rule">
+        <field name="name">Car Allowance</field>
+        <field name="code">CASR</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.car_allowance_weekly_monthly(payslip)</field>
+    </record>
+
+    <record id="house_allowance_salary_rule" model="hr.salary.rule">
+        <field name="name">House Allowance</field>
+        <field name="code">HASR</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.house_allowance_weekly_monthly(payslip)</field>
+    </record>
+
+    <record id="other_allowance_salary_rule" model="hr.salary.rule">
+        <field name="name">Other Allowance</field>
+        <field name="code">OASR</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.other_allowance_weekly_monthly(payslip)</field>
+    </record>
+</odoo>
+

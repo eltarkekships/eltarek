@@ -36,7 +36,7 @@
                                        attrs="{'readonly':[('state','!=','draft')],'required':[('state','=','draft')]}"/>
                             </group>
                             <group>
-                                <field name="project_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="project_id" attrs="{'readonly':[('state','!=','draft')]}" invisible="1"/>
                                 <field name="holiday_type" attrs="{'readonly':[('state','!=','draft')]}" invisible="1"/>
                             </group>
                         </group>
@@ -70,7 +70,7 @@
                     <field name="name"/>
                     <field name="employee_id"/>
 <!--                    <field name="code"/>-->
-                    <field name="project_id"/>
+                    <field name="project_id" invisible="1"/>
                     <field name="date_from"/>
                     <field name="date_to"/>
                     <field name="state"/>

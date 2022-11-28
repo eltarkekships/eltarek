@@ -41,6 +41,11 @@
                         </group>
                     </page>
                 </xpath>
+
+
+                 <xpath expr="//field[@name='hr_responsible_id']" position="attributes">
+                    <attribute name="required">False</attribute>
+                </xpath>
             </field>
         </record>
     </data>

@@ -18,7 +18,10 @@ class HrEmployee(models.Model):
                         total += contract.day_value / 2
                     elif rec.total_hours > 5 :
                         total += contract.day_value
-            return total
+                    return total
+        else:
+            return 0
+
 
 
     def mission_employee_value(self, payslip):
@@ -30,3 +33,5 @@ class HrEmployee(models.Model):
                 if payslip.date_from <= rec.start_date.date() <= payslip.date_to:
                     total = rec.value
             return total
+        else:
+            return 0

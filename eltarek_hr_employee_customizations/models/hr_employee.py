@@ -40,8 +40,9 @@ class HrEmployee(models.Model):
     def constrains_truck_number(self):
         truck = self.env['hr.employee'].search([('id','!=',self.id)])
         for rec in truck:
-            if rec.driver_type_job_id.id == self.driver_type_job_id.id:
-                raise ValidationError('Truck Number Must Be Unique')
+            if rec.is_driver_rel == True:
+                if rec.driver_type_job_id.id == self.driver_type_job_id.id:
+                    raise ValidationError('Truck Number Must Be Unique')
 
 
     @api.onchange('driver_job_id')

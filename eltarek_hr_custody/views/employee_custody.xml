@@ -46,6 +46,7 @@
                                 <field name="delivery_date" required="True"/>
                                 <field name="return_date" attrs="{'required':[('state','=','return')],'invisible':[('state','!=','return')]}"/>
                                 <field name="amount"/>
+                                <field name="custody_attach"/>
                                 <field name="return_amount" attrs="{'readonly':[('type','=','money')],'invisible':['|',('state','!=','return'),('type','!=','money')]}"/>
                                 <field name="status" attrs="{'required':[('state','=','return')],'invisible':['|',('state','!=','return'),('type','!=','item')]}"/>
                             </group>

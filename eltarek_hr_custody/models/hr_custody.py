@@ -36,6 +36,7 @@ class HrCustody(models.Model):
     return_amount = fields.Monetary(string="Return Amount",  required=False, )
     status = fields.Selection(string="Status When Returned", selection=[('good', 'Good and Working'), ('fix','Need Some Fix'),('scrap', 'Scrap') ], required=False, )
     state = fields.Selection(string="State", selection=[('draft','Draft'),('delivered', 'Delivered'), ('return', 'Returned'), ], default='draft' )
+    custody_attach = fields.Binary('Attachment')
 
 
     @api.model

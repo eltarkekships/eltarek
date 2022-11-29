@@ -1,5 +1,5 @@
 {
-    'name': 'Sure Income Tax Configurations',
+    'name': 'ELTarek Income Tax Configurations',
     'data': [
 
         'data/salary_rules.xml',
@@ -8,5 +8,5 @@
         'security/ir.model.access.csv',
     ],
     'author': 'Centione'
-    , 'depends': ['hr', 'hr_payroll','sure_hr_payroll_base']
+    , 'depends': ['hr', 'hr_payroll','eltarek_hr_payroll_base','hr_work_entry_contract_enterprise']
 }

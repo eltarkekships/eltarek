@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "ElTarek HR Contract Customizations",
+    'name': "ElTarek HR Salary Rules",
 
     'summary': """
-    Module Contract for customizng adding fields and features in employee
+    Module slary rules for customizng employee salaries
         """,
 
     'author': "Ahmed Abo El Fadl | Centione",

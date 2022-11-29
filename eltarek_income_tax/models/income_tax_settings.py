@@ -30,7 +30,7 @@ class IncomeTaxSettings(models.Model):
 
     def calc_income_tax(self, tax_pool,payslip):
         tax_pool = tax_pool/payslip.currency_id.rate
-        income_tax_settings = self.env.ref('sure_income_tax.income_tax_settings0')
+        income_tax_settings = self.env.ref('eltarek_income_tax.income_tax_settings0')
         functional_exemption = income_tax_settings.is_functional_exempt and income_tax_settings.functional_exempt_value or 0
         effective_salary = tax_pool - functional_exemption
         income_tax = 0.0

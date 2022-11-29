@@ -11,7 +11,7 @@ class OverTime(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string="Name", required=False, default='Overtime')
-    comment = fields.Char(string="Comment", required=True, )
+    comment = fields.Char(string="Comment", required=False, )
     date_from = fields.Datetime(string="Date From")
 
     @api.onchange('date_from')
@@ -36,7 +36,7 @@ class OverTime(models.Model):
             if self.date_to <= self.date_from:
                 raise UserError(_('Date To can not be before Or equal Date From.'))
 
-    project_id = fields.Many2one('project.project', required=True)
+    project_id = fields.Many2one('project.project', required=False)
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee", required=True, )
     # code = fields.Char(string='Code',related='employee_id.old_id',store=True)
     state = fields.Selection(string="", selection=[('draft', 'Draft'), ('approved', 'Approved'), ('done', 'Done')],

@@ -12,6 +12,7 @@
                             <tree editable="bottom">
                                 <field name="name"/>
                                 <field name="truck_number"/>
+                                <field name="analytic_id"/>
                             </tree>
                         </field>
                     </group>

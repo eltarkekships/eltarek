@@ -83,7 +83,7 @@ class HrContract(models.Model):
         for work in self.resource_calendar_id.attendance_ids:
             work_day = dict(work._fields['dayofweek'].selection).get(work.dayofweek)
             schdule_list.append(work_day)
-        dates = self.date_range_list(self.date_start,payslip.date_to)
+        dates = self.date_range_list(payslip.date_from,payslip.date_to)
         # days_off = self.public_time_off_dates()
         schedule = list(set(schdule_list))
         for date in dates:

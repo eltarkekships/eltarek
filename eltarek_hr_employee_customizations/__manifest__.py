@@ -15,7 +15,7 @@
     'website': "http://www.centione.com",
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'hr'],
+    'depends': ['base', 'hr','account','analytic'],
 
     # always loaded
     'data': [

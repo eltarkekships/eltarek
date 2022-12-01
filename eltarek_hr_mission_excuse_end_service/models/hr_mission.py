@@ -18,6 +18,7 @@ class HrMission(models.Model):
     mission_id = fields.Many2one('mission.config')
     value = fields.Float('Value')
     payslip_checked = fields.Boolean('Payslip Checked',readonly=True)
+    mission_pay_id = fields.Many2one('hr.payslip')
 
 
     @api.onchange('mission_id')

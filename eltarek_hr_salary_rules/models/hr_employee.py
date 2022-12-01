@@ -63,8 +63,8 @@ class HrEmployee(models.Model):
         total = 0
         if mission:
             for rec in mission:
-                if payslip.date_from <= rec.start_date.date() <= payslip.date_to:
-                    total = rec.value
+                if payslip.date_from <= rec.start_date.date() + timedelta(days=1) <= payslip.date_to:
+                    total += rec.value
             return total
         else:
             return 0

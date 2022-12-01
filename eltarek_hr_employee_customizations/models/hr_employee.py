@@ -23,39 +23,59 @@ class HrEmployee(models.Model):
     place_of_issue = fields.Char('Place Of Issue')
     date_of_issue = fields.Date('Date Of Issue')
     expiary_date = fields.Date('Expiary Date')
-    payment_method = fields.Selection([('cash','Cash'),('bank','Bank')])
+    payment_method = fields.Selection([('cash', 'Cash'), ('bank', 'Bank')])
     prepaid = fields.Char('Prepaid')
     bank_account_no = fields.Char('Bank Account Number')
     branch_id = fields.Char('Branch ID')
     bank_name = fields.Char('Bank Name')
-    age = fields.Integer('Age',compute='compute_employee_age')
-    social_company_id = fields.Many2one('social.insurance.config','Social Company')
+    age = fields.Integer('Age', compute='compute_employee_age')
+    social_company_id = fields.Many2one('social.insurance.config', 'Social Company')
     is_driver_rel = fields.Boolean(related='job_id.is_driver')
-    driver_job_id = fields.Many2one('driver.line','Branched')
-    driver_type_job_id = fields.Many2one('driver.type.line','Truck Number')
+    driver_job_id = fields.Many2one('driver.line', 'Branched')
+    driver_type_job_id = fields.Many2one('driver.type.line', 'Truck Number')
     # old_id = fields.Char(string='Code', default='0')
     is_manager = fields.Boolean('Management')
+    mother_name = fields.Char("Mother's Name")
+
+    year_of_eduction = fields.Char('Year of Education')
+    evaluation = fields.Char('Evaluation')
+    section = fields.Char('Section')
+    place_of_education = fields.Char('Place of Eduaction')
+    education = fields.Char('Education')
+
+    military_status = fields.Selection(
+        [('completed', 'Completed'), ('exempted', 'Exempted'), ('postponed', 'Postponed'), ('serving', 'Serving')],
+        string='Military Status')
+    manner_degree = fields.Char('Degree')
+    reason = fields.Char('Reason')
+    military_certificate_number = fields.Char('Military Certificate Number')
+    certificate_date = fields.Date('Certificate Date')
+
+    address_1 = fields.Char('Address 1')
+    emergency_contact_2 = fields.Char('Eemergency Contact 2')
+    emergency_phone_2 = fields.Char('Eemergency Phone 2')
+    address_2 = fields.Char('Address 2')
 
     @api.constrains('driver_type_job_id')
     def constrains_truck_number(self):
-        truck = self.env['hr.employee'].search([('id','!=',self.id)])
+        truck = self.env['hr.employee'].search([('id', '!=', self.id)])
         for rec in truck:
             if rec.is_driver_rel == True:
                 if rec.driver_type_job_id.id == self.driver_type_job_id.id:
                     raise ValidationError('Truck Number Must Be Unique')
 
-
     @api.onchange('driver_job_id')
     def onchange_domain_driver_job(self):
-            return {'domain': {'driver_type_job_id': [('driver_type_id', '=', self.driver_job_id.id)]}}
+        return {'domain': {'driver_type_job_id': [('driver_type_id', '=', self.driver_job_id.id)]}}
 
     @api.depends('birthday')
     def compute_employee_age(self):
         for rec in self:
             if rec.birthday:
                 today = date.today()
-                age = today.year - rec.birthday.year - ((today.month, today.day) < (rec.birthday.month, rec.birthday.day))
-                if age < 0 :
+                age = today.year - rec.birthday.year - (
+                            (today.month, today.day) < (rec.birthday.month, rec.birthday.day))
+                if age < 0:
                     raise ValidationError('Age Cannot Be Negative')
                 else:
                     rec.age = age
@@ -87,8 +107,10 @@ class HrEmployee(models.Model):
                         base_url += '/web#id=%d&amp;view_type=form&amp' % (employee.id)
                         base_url += '&amp;action=%d' % (action_id.id)
                         employee.message_post(record_name='ID Expiary Date',
-                                              body=""" ID Will End In """ + str(abs(delta.months)) + ' ' + 'Months and ' + ' ' + str(abs(delta.days)) + ' ' + 'Days '
-                                                   """<br> You can access employee details from here: <br>"""
+                                              body=""" ID Will End In """ + str(
+                                                  abs(delta.months)) + ' ' + 'Months and ' + ' ' + str(
+                                                  abs(delta.days)) + ' ' + 'Days '
+                                                                           """<br> You can access employee details from here: <br>"""
                                                    + """<a href="%s">Link</a>""" % (
                                                        base_url)
                                               , message_type="notification",
@@ -114,7 +136,8 @@ class HrEmployee(models.Model):
                         base_url += '/web#id=%d&amp;view_type=form&amp' % (employee.id)
                         base_url += '&amp;action=%d' % (action_id.id)
                         employee.message_post(record_name='Employee End Probation Period',
-                                              body=str(abs(delta.months)) + ' ' + 'Months' + ' ' + """Probation Period Have Passed on """ + employee.name + """ Works As """ + employee.job_title + """ In Department """ + employee.department_id.name +
+                                              body=str(
+                                                  abs(delta.months)) + ' ' + 'Months' + ' ' + """Probation Period Have Passed on """ + employee.name + """ Works As """ + employee.job_title + """ In Department """ + employee.department_id.name +
                                                    """<br> You can access employee details from here: <br>"""
                                                    + """<a href="%s">Link</a>""" % (
                                                        base_url)
@@ -141,7 +164,8 @@ class HrEmployee(models.Model):
                         base_url += '/web#id=%d&amp;view_type=form&amp' % (employee.contract_id.id)
                         base_url += '&amp;action=%d' % (action_id.id)
                         employee.message_post(record_name='Contract Hire Date',
-                                              body=str(abs(delta.months)) + ' ' + 'Months' + ' ' + """Have Passed on Contract Since Hire For """ + employee.name + """ Works As """ + employee.job_title + """ In Department """ + employee.department_id.name +
+                                              body=str(
+                                                  abs(delta.months)) + ' ' + 'Months' + ' ' + """Have Passed on Contract Since Hire For """ + employee.name + """ Works As """ + employee.job_title + """ In Department """ + employee.department_id.name +
                                                    """<br> You can access contract details from here: <br>"""
                                                    + """<a href="%s">Link</a>""" % (
                                                        base_url)

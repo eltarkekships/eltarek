@@ -106,6 +106,10 @@
                     <field name="emergency_phone_2"/>
                     <field name="address_2"/>
                 </xpath>
+
+                <xpath expr="//field[@name='address_home_id']" position="after">
+                    <field name="current_address"/>
+                </xpath>
             </field>
         </record>
     </data>

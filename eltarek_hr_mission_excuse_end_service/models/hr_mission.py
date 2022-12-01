@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 import re
+from datetime import timedelta
 from odoo.exceptions import ValidationError, AccessError
 from dateutil.relativedelta import relativedelta
 
@@ -65,7 +66,7 @@ class HrMission(models.Model):
     @api.onchange('start_date')
     def onchange_start(self):
         if  self.start_date:
-            start_hour = self.start_date.replace(hour=22,microsecond=0, second=0, minute=0)
+            start_hour = self.start_date.replace(hour=22, second=0, minute=0) + timedelta(days=-1)
             self.start_date = start_hour
 
 

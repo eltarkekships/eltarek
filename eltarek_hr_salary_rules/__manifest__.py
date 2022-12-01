@@ -11,13 +11,14 @@
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'hr', 'hr_contract',  'hr_payroll',
-                'eltarek_hr_payroll_base', 'hr_payroll_account'],
+                'eltarek_hr_payroll_base', 'hr_payroll_account','eltarek_hr_mission_excuse_end_service'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'data/salary_rules.xml',
         'views/hr_salary_rule.xml',
+        'views/hr_payslip.xml',
     ],
     # only loaded in demonstration mode
     # 'demo': [

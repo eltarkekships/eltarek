@@ -56,6 +56,8 @@ class HrEmployee(models.Model):
     emergency_phone_2 = fields.Char('Eemergency Phone 2')
     address_2 = fields.Char('Address 2')
 
+    current_address = fields.Char('Cuurent Address')
+
     @api.constrains('driver_type_job_id')
     def constrains_truck_number(self):
         truck = self.env['hr.employee'].search([('id', '!=', self.id)])

@@ -7,7 +7,7 @@ from collections import defaultdict
 from dateutil import rrule
 import base64
 
-from datetime import date, datetime
+from datetime import date, datetime,timedelta
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
@@ -17,6 +17,7 @@ from odoo.tools import float_round, date_utils
 from odoo.tools.misc import format_date
 from odoo.tools.safe_eval import safe_eval
 from odoo.osv import expression
+
 
 
 class HrPayslipEmployees(models.TransientModel):
@@ -168,6 +169,16 @@ class HrPayslipEmployees(models.TransientModel):
 
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
+
+    @api.onchange('date_from')
+    def onchange_payslip_to_date(self):
+        if self.date_from:
+            date_end = self.date_from
+            day_name = date_end.strftime("%A")
+            while day_name != 'Wednesday':
+                day_name = date_end.strftime("%A")
+                date_end += timedelta(days=1)
+            self.date_to = date_end
 
 
     def _get_payslip_lines(self):

@@ -5,13 +5,13 @@
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
-                 <xpath expr="//field[@name='job_title']" position="attributes">
-                     <attribute name="invisible">1</attribute>
+                <xpath expr="//field[@name='job_title']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//h1[@class='d-flex']" position="after">
                     <h1>
                         <field name="arabic_name" placeholder="Arabic Name"/>
-<!--                        <field name="old_id"/>-->
+                        <!--                        <field name="old_id"/>-->
                     </h1>
                 </xpath>
                 <xpath expr="//field[@name='category_ids']" position="before">
@@ -25,16 +25,17 @@
                 </xpath>
                 <xpath expr="//field[@name='coach_id']" position="after">
                     <field name="job_id"/>
-                     <field name="is_driver_rel" invisible="1"/>
-                        <field name="driver_job_id" attrs="{'invisible':[('is_driver_rel','!=',True)]}"/>
-                        <field name="driver_type_job_id" attrs="{'invisible':[('is_driver_rel','!=',True)]}"/>
-                        <field name="social_exemption"/>
+                    <field name="is_driver_rel" invisible="1"/>
+                    <field name="driver_job_id" attrs="{'invisible':[('is_driver_rel','!=',True)]}"/>
+                    <field name="driver_type_job_id" attrs="{'invisible':[('is_driver_rel','!=',True)]}"/>
+                    <field name="social_exemption"/>
                 </xpath>
                 <xpath expr="//page[@name='hr_settings']//field[@name='job_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//page[@name='hr_settings']" position="after">
-                    <page name="social_info" string="Social Information" attrs="{'invisible':[('social_exemption','=',False)]}">
+                    <page name="social_info" string="Social Information"
+                          attrs="{'invisible':[('social_exemption','=',False)]}">
                         <group string="Social Information">
                             <field name="social_number"/>
                             <field name="social_date"/>
@@ -53,6 +54,7 @@
                     </page>
                 </xpath>
                 <xpath expr="//field[@name='identification_id']" position="after">
+                    <field name="mother_name"/>
                     <field name="date_of_issue"/>
                     <field name="place_of_issue"/>
                     <field name="expiary_date"/>
@@ -69,6 +71,40 @@
                 </xpath>
                 <xpath expr="//field[@name='birthday']" position="after">
                     <field name="age"/>
+                </xpath>
+
+                <xpath expr="//page[@name='personal_information']//group[7]" position="replace">
+                    <group string="Education">
+                        <field name="year_of_eduction"/>
+                        <field name="evaluation"/>
+                        <field name="section"/>
+                        <field name="place_of_education"/>
+                        <field name="education"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@name='personal_information']//group[7]" position="after">
+                    <group string="Military">
+                        <field name="military_status"/>
+                        <field name="manner_degree"/>
+                        <field name="reason"/>
+                        <field name="military_certificate_number"/>
+                        <field name="certificate_date"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='emergency_contact']" position="attributes">
+                    <attribute name="string">Emergency Contact 1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='emergency_phone']" position="attributes">
+                    <attribute name="string">Emergency Phone 1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='emergency_phone']" position="after">
+                    <field name="address_1"/>
+                    <field name="emergency_contact_2"/>
+                    <field name="emergency_phone_2"/>
+                    <field name="address_2"/>
                 </xpath>
             </field>
         </record>

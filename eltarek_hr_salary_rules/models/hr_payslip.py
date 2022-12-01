@@ -176,8 +176,8 @@ class HrPayslip(models.Model):
             date_end = self.date_from
             day_name = date_end.strftime("%A")
             while day_name != 'Wednesday':
-                day_name = date_end.strftime("%A")
                 date_end += timedelta(days=1)
+                day_name = date_end.strftime("%A")
             self.date_to = date_end
 
 

@@ -24,7 +24,12 @@ class HrMission(models.Model):
         if mission:
             for rec in mission:
                 if payslip:
-                    rec.payslip_checked = True
+                    for pay in payslip.line_ids:
+                        if pay.code == 'MVSR':
+                            rec.payslip_checked = True
+                            break
+                        else:
+                            rec.payslip_checked = False
                 else:
                     rec.payslip_checked = False
         else:

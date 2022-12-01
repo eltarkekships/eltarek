@@ -35,7 +35,7 @@
                 </xpath>
                 <xpath expr="//page[@name='hr_settings']" position="after">
                     <page name="social_info" string="Social Information"
-                          attrs="{'invisible':[('social_exemption','=',False)]}">
+                          attrs="{'invisible':[('social_exemption','=',True)]}">
                         <group string="Social Information">
                             <field name="social_number"/>
                             <field name="social_date"/>

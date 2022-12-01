@@ -34,6 +34,7 @@ class HrEmployee(models.Model):
 
     def mission_extra_employee_value(self,payslip,contract):
         schdule_list = []
+        date_diff = []
         for work in contract.resource_calendar_id.attendance_ids:
             work_day = dict(work._fields['dayofweek'].selection).get(work.dayofweek)
             schdule_list.append(work_day)
@@ -45,7 +46,9 @@ class HrEmployee(models.Model):
             for mis in mission:
                 if payslip.date_from <= mis.start_date.date() <= payslip.date_to:
                     dates = self.date_range_list(mis.start_date.date(), mis.end_date.date())
-                    date_diff = list(set(schedule) - set(dates))
+                    for date in dates:
+                        if date in schedule:
+                            date_diff.append(date)
                     total += len(date_diff) * mis.value
             return total
         else:

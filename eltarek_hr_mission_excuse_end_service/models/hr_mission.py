@@ -17,41 +17,7 @@ class HrMission(models.Model):
     name = fields.Char(default='Mission')
     mission_id = fields.Many2one('mission.config')
     value = fields.Float('Value')
-    payslip_checked = fields.Boolean('Payslip Checked',compute='compute_payslip_checked')
-
-    def compute_payslip_checked(self):
-        mission = self.env['hr.mission'].search([])
-        payslip = self.env['hr.payslip'].search([],order='create_date desc',limit=1)
-        if mission:
-            for rec in mission:
-                if payslip:
-                    for pay in payslip.line_ids:
-                        if pay.code == 'MVSR':
-                            rec.payslip_checked = True
-                            break
-                        else:
-                            rec.payslip_checked = False
-                else:
-                    rec.payslip_checked = False
-        else:
-            self.payslip_checked = False
-
-
-        # if payslip:
-        #     for rec in mission:
-        #         total_pay = rec.value
-        #         for line in payslip.line_ids:
-        #             if line.code == 'MVSR':
-        #                 if line.amount == total_pay:
-        #                     rec.payslip_checked = True
-        #                 else:
-        #                     rec.payslip_checked = False
-        #                 break
-        # else:
-        #     self.payslip_checked = False
-
-
-
+    payslip_checked = fields.Boolean('Payslip Checked',readonly=True)
 
 
     @api.onchange('mission_id')

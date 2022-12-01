@@ -10,12 +10,22 @@
 
 
     <record id="mission_value_salary_rule" model="hr.salary.rule">
-        <field name="name">Mission Value</field>
+        <field name="name">Mission Allowance</field>
         <field name="code">MVSR</field>
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = employee.mission_employee_value(payslip)</field>
+    </record>
+
+
+    <record id="mission_extra_allowance_salary_rule" model="hr.salary.rule">
+        <field name="name">Mission Extra Allowance</field>
+        <field name="code">MEASR</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = employee.mission_extra_employee_value(payslip,contract)</field>
     </record>
 
     <record id="overtime_hours_salary_rule" model="hr.salary.rule">

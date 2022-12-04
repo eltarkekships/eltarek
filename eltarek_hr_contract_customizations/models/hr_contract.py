@@ -41,7 +41,10 @@ class HrContract(models.Model):
         payslip = payslip.dict
         days = calendar.monthrange(payslip.date_from.year, payslip.date_from.month)[1]
         if payslip.date_from.month == payslip.date_to.month:
-            return 0
+            if days == payslip.date_to.day:
+                return self.employee_insurance
+            else:
+                return 0
         else:
             return self.employee_insurance
 
@@ -50,7 +53,10 @@ class HrContract(models.Model):
         payslip = payslip.dict
         days = calendar.monthrange(payslip.date_from.year, payslip.date_from.month)[1]
         if payslip.date_from.month == payslip.date_to.month:
-            return 0
+            if days == payslip.date_to.day:
+                return self.company_insurance
+            else:
+                return 0
         else:
             return self.company_insurance
 

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import calendar
+
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 from datetime import datetime
@@ -21,9 +23,9 @@ class HrContract(models.Model):
     fixed_insurance = fields.Float(string="Fixed Insurance Amount", required=False, )
     is_insured = fields.Boolean(string="Is Insured?", default=True)
     gross_salary = fields.Float('Gross Salary')
-    employee_insurance = fields.Float(string="Employee Insurance ", required=False,compute='compute_company_employee_insurance')
-    company_insurance = fields.Float(string="Company Inusrance ", required=False,compute='compute_company_employee_insurance' )
-    total_company_employee = fields.Float(string="Total ", required=False,compute='compute_company_employee_insurance' )
+    employee_insurance = fields.Float(string="Employee Insurance ", required=False,compute='compute_company_employee_insurance',store=True)
+    company_insurance = fields.Float(string="Company Inusrance ", required=False,compute='compute_company_employee_insurance',store=True )
+    total_company_employee = fields.Float(string="Total ", required=False,compute='compute_company_employee_insurance',store=True )
     travel_allwoance = fields.Float('Travel Allowance')
     car_allwoance = fields.Float('Car Allowance')
     house_allwoance = fields.Float('House Allowance')
@@ -34,6 +36,25 @@ class HrContract(models.Model):
     num_work_hour_per_day = fields.Float('Hour Per Day')
     day_value = fields.Float('Day Value',compute='compute_day_value')
     hour_value = fields.Float('Hour Value',compute='compute_hour_value')
+
+    def social_insurance_employee_weekly_salary_rule(self,payslip):
+        payslip = payslip.dict
+        days = calendar.monthrange(payslip.date_from.year, payslip.date_from.month)[1]
+        if payslip.date_from.month == payslip.date_to.month:
+            return 0
+        else:
+            return self.employee_insurance
+
+
+    def social_insurance_company_weekly_salary_rule(self,payslip):
+        payslip = payslip.dict
+        days = calendar.monthrange(payslip.date_from.year, payslip.date_from.month)[1]
+        if payslip.date_from.month == payslip.date_to.month:
+            return 0
+        else:
+            return self.company_insurance
+
+
 
     @api.depends('num_work_day_per_month')
     def compute_day_value(self):

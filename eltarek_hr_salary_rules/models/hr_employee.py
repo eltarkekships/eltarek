@@ -44,7 +44,7 @@ class HrEmployee(models.Model):
         total = 0
         if mission:
             for mis in mission:
-                if payslip.date_from <= mis.start_date.date() <= payslip.date_to:
+                if payslip.date_from <= mis.start_date.date() + timedelta(days=1) <= payslip.date_to:
                     dates = self.date_range_list(mis.start_date.date() + timedelta(days=1), mis.end_date.date())
                     for date in dates:
                         if date in schedule:

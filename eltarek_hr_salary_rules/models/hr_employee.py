@@ -45,7 +45,7 @@ class HrEmployee(models.Model):
         if mission:
             for mis in mission:
                 if payslip.date_from <= mis.start_date.date() <= payslip.date_to:
-                    dates = self.date_range_list(mis.start_date.date(), mis.end_date.date())
+                    dates = self.date_range_list(mis.start_date.date() + timedelta(days=1), mis.end_date.date())
                     for date in dates:
                         if date in schedule:
                             date_diff.append(date)
@@ -57,14 +57,14 @@ class HrEmployee(models.Model):
 
 
 
-    def mission_employee_value(self, payslip):
+    def mission_employee_value(self, contract,payslip):
         mission = self.env['hr.mission'].search(
             [('employee_id', '=', self.id), ('payslip_checked', '=', False), ('state', '=', 'validate')])
         total = 0
         if mission:
             for rec in mission:
                 if payslip.date_from <= rec.start_date.date() + timedelta(days=1) <= payslip.date_to:
-                    total += rec.value
+                    total += rec.period * contract.day_value
             return total
         else:
             return 0

@@ -170,15 +170,14 @@ class HrPayslipEmployees(models.TransientModel):
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
-    mission_ids = fields.One2many('hr.mission','mission_pay_id')
-    def compute_sheet(self):
-        res = super(HrPayslip, self).compute_sheet()
+    mission_ids = fields.One2many('hr.mission','mission_pay_id',compute='compute_mission_ids')
+    def compute_mission_ids(self):
         missions = self.env['hr.mission'].search([('employee_id','=',self.employee_id.id),('state','=','validate')])
         self.mission_ids = [(6,0,missions.ids)]
         for rec in self.mission_ids:
             if self.date_from <= rec.start_date.date() + timedelta(days=1) <= self.date_to:
-                rec.payslip_checked = True
-        return res
+                if self.state == 'done':
+                    rec.payslip_checked = True
 
     @api.onchange('date_from')
     def onchange_payslip_to_date(self):

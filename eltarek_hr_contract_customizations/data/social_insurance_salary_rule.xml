@@ -14,7 +14,7 @@
                 <field name="category_id" ref="hr_payroll.DED"/>
                 <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
                 <field name="amount_select">code</field>
-                <field name="amount_python_compute">result = contract.social_insurance_weekly_salary_rule(payslip)</field>
+                <field name="amount_python_compute">result = contract.social_insurance_employee_weekly_salary_rule(payslip)</field>
            </record>
 
 <!--        <record id="company_insurance_subscription_alw" model="hr.salary.rule">-->

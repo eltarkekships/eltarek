@@ -63,8 +63,9 @@ class HrEmployee(models.Model):
         truck = self.env['hr.employee'].search([('id', '!=', self.id)])
         for rec in truck:
             if rec.is_driver_rel == True:
-                if rec.driver_type_job_id.id == self.driver_type_job_id.id:
-                    raise ValidationError('Truck Number Must Be Unique')
+                if rec.driver_type_job_id:
+                    if rec.driver_type_job_id.id == self.driver_type_job_id.id:
+                        raise ValidationError('Truck Number Must Be Unique')
 
     @api.onchange('driver_job_id')
     def onchange_domain_driver_job(self):

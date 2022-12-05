@@ -38,6 +38,7 @@ class IncomeTaxSettings(models.Model):
             ('state', '=', 'done'),
             ('employee_id', '=', payslip.employee_id),
         ])
+        
         sum_gross = 0
         employee_insurance = payslip.contract_id.employee_insurance
         if old_payslip:

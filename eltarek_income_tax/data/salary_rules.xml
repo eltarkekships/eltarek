@@ -33,7 +33,7 @@ result = -1 * (categories.BASIC + categories.ALW + categories.DED) * (payslip.en
             <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
                 <field name="amount_select">code</field>
                 <field name="amount_python_compute">
-effective_salary = categories.BASIC + categories.ALW + categories.BINCTAX + categories.DED
+effective_salary = categories.BASIC + categories.ALW + categories.DED
 result = -1 * payslip.env['income.tax.settings'].sudo().calc_income_tax(effective_salary,payslip)
                 </field>
            </record>

@@ -32,42 +32,42 @@ class IncomeTaxSettings(models.Model):
 
 
 
-    # def total_tax_end(self,payslip):
-    #     old_payslip = self.env['hr.payslip'].search([
-    #         ('id', '!=', payslip.id),
-    #         ('state', 'in', ['done']),
-    #         ('payslip_run_id', '!=', False),
-    #         ('employee_id', '=', payslip.employee_id),
-    #         ('date_from', '>=', payslip.date_from),
-    #         ('date_from', '<=', payslip.date_to),
-    #     ])
-    #     sum_gross = 0
-    #     employee_insurance = payslip.contract_id.employee_insurance
-    #     if old_payslip:
-    #         days = calendar.monthrange(payslip.date_from.year, payslip.date_from.month)[1]
-    #         if payslip.date_from.month == payslip.date_to.month:
-    #             if days == payslip.date_to.day:
-    #                 for pay in old_payslip:
-    #                     lines_tax = pay.line_ids.filtered(lambda l: l.code == 'INCTAX')
-    #                     for line in lines_tax:
-    #                         if line.amount == 0:
-    #                             lines_gross = pay.filtered(lambda l: l.code == 'GROSS')
-    #                             for gross in lines_gross:
-    #                                 sum_gross += gross.amount
-    #                 total = sum_gross - employee_insurance
-    #                 return total
-    #             else:
-    #                 return 0
-    #         else:
-    #             for pay in old_payslip:
-    #                 lines_tax = pay.line_ids.filtered(lambda l: l.code == 'INCTAX')
-    #                 for line in lines_tax:
-    #                     if line.amount == 0:
-    #                         lines_gross = pay.filtered(lambda l: l.code == 'GROSS')
-    #                         for gross in lines_gross:
-    #                             sum_gross += gross.amount
-    #             total = sum_gross - employee_insurance
-    #             return total
+    def total_tax_end(self,payslip):
+        old_payslip = self.env['hr.payslip'].search([
+            ('id', '!=', payslip.id),
+            ('state', 'in', ['done']),
+            ('payslip_run_id', '!=', False),
+            ('employee_id', '=', payslip.employee_id),
+            ('date_from', '>=', payslip.date_from),
+            ('date_from', '<=', payslip.date_to),
+        ])
+        sum_gross = 0
+        employee_insurance = payslip.contract_id.employee_insurance
+        if old_payslip:
+            days = calendar.monthrange(payslip.date_from.year, payslip.date_from.month)[1]
+            if payslip.date_from.month == payslip.date_to.month:
+                if days == payslip.date_to.day:
+                    for pay in old_payslip:
+                        lines_tax = pay.line_ids.filtered(lambda l: l.code == 'INCTAX')
+                        for line in lines_tax:
+                            if line.amount == 0:
+                                lines_gross = pay.filtered(lambda l: l.code == 'GROSS')
+                                for gross in lines_gross:
+                                    sum_gross += gross.amount
+                    total = sum_gross - employee_insurance
+                    return total
+                else:
+                    return 0
+            else:
+                for pay in old_payslip:
+                    lines_tax = pay.line_ids.filtered(lambda l: l.code == 'INCTAX')
+                    for line in lines_tax:
+                        if line.amount == 0:
+                            lines_gross = pay.filtered(lambda l: l.code == 'GROSS')
+                            for gross in lines_gross:
+                                sum_gross += gross.amount
+                total = sum_gross - employee_insurance
+                return total
 
 
 
@@ -75,8 +75,7 @@ class IncomeTaxSettings(models.Model):
 
 
     def calc_income_tax(self, tax_pool,payslip):
-        # tax_pool = self.total_tax_end(payslip)
-        tax_pool = tax_pool/payslip.currency_id.rate
+        tax_pool = self.total_tax_end(payslip) or 0
         income_tax_settings = self.env.ref('eltarek_income_tax.income_tax_settings0')
         functional_exemption = income_tax_settings.is_functional_exempt and income_tax_settings.functional_exempt_value or 0
         effective_salary = tax_pool - functional_exemption

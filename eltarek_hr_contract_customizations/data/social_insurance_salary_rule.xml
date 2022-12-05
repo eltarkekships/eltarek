@@ -11,7 +11,7 @@
                 <field name="name">Employee Insurance Salary Rule</field>
                 <field name="sequence" eval="78"/>
                 <field name="code">EISR</field>
-                <field name="category_id" ref="hr_payroll.DED"/>
+                <field name="category_id" ref="eltarek_hr_contract_customizations.ANET"/>
                 <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
                 <field name="amount_select">code</field>
                 <field name="amount_python_compute">result = contract.social_insurance_employee_weekly_salary_rule(payslip)</field>
@@ -33,7 +33,7 @@
          <record id="company_insurance_subscription_ded" model="hr.salary.rule">
             <field name="name">Company Insurance Salary Rule</field>
             <field name="code">CISR</field>
-            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="category_id" ref="eltarek_hr_contract_customizations.ANET"/>
             <field name="struct_id" ref="eltarek_hr_payroll_base.custom_default_payroll_structure"/>
             <field name="sequence" eval="250"/>
             <field name="amount_select">code</field>

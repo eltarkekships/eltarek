@@ -38,7 +38,7 @@ class IncomeTaxSettings(models.Model):
             ('state', '=', 'done'),
             ('employee_id', '=', payslip.employee_id),
         ])
-        
+
         sum_gross = 0
         employee_insurance = payslip.contract_id.employee_insurance
         if old_payslip:
@@ -53,8 +53,8 @@ class IncomeTaxSettings(models.Model):
                                     lines_gross = pay.line_ids.filtered(lambda g: g.code == 'GROSS')
                                     for gross in lines_gross:
                                         sum_gross += gross.amount
-                        total = sum_gross - employee_insurance
-                        return total
+                    total = sum_gross - employee_insurance
+                    return total
                 else:
                     return 0
             else:
@@ -74,7 +74,7 @@ class IncomeTaxSettings(models.Model):
 
 
     def calc_income_tax(self, tax_pool,payslip):
-        tax_pool = self.total_tax_end(payslip)
+        tax_pool = self.total_tax_end(payslip) or 0
         income_tax_settings = self.env.ref('eltarek_income_tax.income_tax_settings0')
         functional_exemption = income_tax_settings.is_functional_exempt and income_tax_settings.functional_exempt_value or 0
         effective_salary = tax_pool - functional_exemption

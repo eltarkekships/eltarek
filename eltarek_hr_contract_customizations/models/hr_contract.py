@@ -13,6 +13,7 @@ from math import ceil
 
 LOGGER = logging.getLogger(__name__)
 
+
 class HrContract(models.Model):
     _inherit = 'hr.contract'
 
@@ -23,9 +24,12 @@ class HrContract(models.Model):
     fixed_insurance = fields.Float(string="Fixed Insurance Amount", required=False, )
     is_insured = fields.Boolean(string="Is Insured?", default=True)
     gross_salary = fields.Float('Gross Salary')
-    employee_insurance = fields.Float(string="Employee Insurance ", required=False,compute='compute_company_employee_insurance',store=True)
-    company_insurance = fields.Float(string="Company Inusrance ", required=False,compute='compute_company_employee_insurance',store=True )
-    total_company_employee = fields.Float(string="Total ", required=False,compute='compute_company_employee_insurance',store=True )
+    employee_insurance = fields.Float(string="Employee Insurance ", required=False,
+                                      compute='compute_company_employee_insurance', store=True)
+    company_insurance = fields.Float(string="Company Inusrance ", required=False,
+                                     compute='compute_company_employee_insurance', store=True)
+    total_company_employee = fields.Float(string="Total ", required=False, compute='compute_company_employee_insurance',
+                                          store=True)
     travel_allwoance = fields.Float('Travel Allowance')
     car_allwoance = fields.Float('Car Allowance')
     house_allwoance = fields.Float('House Allowance')
@@ -34,33 +38,30 @@ class HrContract(models.Model):
     hr_code_rel = fields.Char(related='employee_id.hr_code')
     num_work_day_per_month = fields.Float('Day Per Month')
     num_work_hour_per_day = fields.Float('Hour Per Day')
-    day_value = fields.Float('Day Value',compute='compute_day_value')
-    hour_value = fields.Float('Hour Value',compute='compute_hour_value')
+    day_value = fields.Float('Day Value', compute='compute_day_value')
+    hour_value = fields.Float('Hour Value', compute='compute_hour_value')
 
-    def social_insurance_employee_weekly_salary_rule(self,payslip):
+    def social_insurance_employee_weekly_salary_rule(self, payslip):
         payslip = payslip.dict
         days = calendar.monthrange(payslip.date_from.year, payslip.date_from.month)[1]
         if payslip.date_from.month == payslip.date_to.month:
             if days == payslip.date_to.day:
-                return self.employee_insurance
+                return -1 * self.employee_insurance
             else:
                 return 0
         else:
-            return self.employee_insurance
+            return -1 * self.employee_insurance
 
-
-    def social_insurance_company_weekly_salary_rule(self,payslip):
+    def social_insurance_company_weekly_salary_rule(self, payslip):
         payslip = payslip.dict
         days = calendar.monthrange(payslip.date_from.year, payslip.date_from.month)[1]
         if payslip.date_from.month == payslip.date_to.month:
             if days == payslip.date_to.day:
-                return self.company_insurance
+                return -1 * self.company_insurance
             else:
                 return 0
         else:
-            return self.company_insurance
-
-
+            return -1 * self.company_insurance
 
     @api.depends('num_work_day_per_month')
     def compute_day_value(self):
@@ -71,7 +72,6 @@ class HrContract(models.Model):
             else:
                 rec.day_value = 0
 
-
     @api.depends('num_work_hour_per_day')
     def compute_hour_value(self):
         for rec in self:
@@ -81,7 +81,6 @@ class HrContract(models.Model):
                 rec.hour_value = wage_per_hour
             else:
                 rec.hour_value = 0
-
 
     @api.depends('fixed_insurance')
     def compute_company_employee_insurance(self):
@@ -97,7 +96,6 @@ class HrContract(models.Model):
                 rec.employee_insurance = 0.0
                 rec.company_insurance = 0.0
                 rec.total_company_employee = 0.0
-
 
     def get_employee_over_sixty_rule(self, date_from=None, date_to=None):
         result = self.get_insurance_primary_wage(date_from, date_to)
@@ -129,7 +127,6 @@ class HrContract(models.Model):
 
         else:
             return 0
-
 
     @api.onchange('employee_id')
     def onchange_employee_id(self):

@@ -61,12 +61,13 @@ class IncomeTaxSettings(models.Model):
                     return 0
             else:
                 for pay in old_payslip:
-                    lines_tax = pay.line_ids.filtered(lambda l: l.code == 'INCTAX')
-                    for line in lines_tax:
-                        if line.amount == 0:
-                            lines_gross = pay.line_ids.filtered(lambda g: g.code == 'GROSS')
-                            for gross in lines_gross:
-                                sum_gross += gross.amount
+                    if pay.date_from.month == payslip.date_from.month:
+                        lines_tax = pay.line_ids.filtered(lambda l: l.code == 'INCTAX')
+                        for line in lines_tax:
+                            if line.amount == 0:
+                                lines_gross = pay.line_ids.filtered(lambda g: g.code == 'GROSS')
+                                for gross in lines_gross:
+                                    sum_gross += gross.amount
                 total = sum_gross - employee_insurance
                 return total
 

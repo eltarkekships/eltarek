@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_show_employee_payroll_time_off_attend" model="res.groups">
+            <field name="name">Show HR</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+        </record>
+
+        <menuitem
+                id="hr.menu_hr_root"
+                name="Employees"
+                groups="eltarek_access_groups_and_rules.group_show_employee_payroll_time_off_attend"
+                web_icon="hr,static/description/icon.png"
+                sequence="185"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="centione_employee_no_edit_form_inherit" model="ir.ui.view">
+            <field name="name">centione.employee.no.edit.form.inherit</field>
+            <field name="model">centione.delivery.request</field>
+            <field name="inherit_id" ref="eltarek_delivery_request_generic.delivery_requests_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True,'no_quick_create':True,'no_open': True,}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -30,7 +30,7 @@ class HrPayslip(models.Model):
                 if total_loans:
                     for loan_id in total_loans:
                         all_loans_lines = self.env['hr.loan.line'].search(
-                            [('loan_id', '=', loan_id.id), ('loan_id.state', '=', 'approved')])
+                            [('loan_id', '=', loan_id.id), ('loan_id.state', '=', 'sent')])
                         open = False
                         for line_loan in all_loans_lines:
                             if line_loan.state != 'paid':
@@ -52,8 +52,8 @@ class HrPayslip(models.Model):
     @api.depends('employee_id', 'date_from', 'date_to')
     @api.onchange('employee_id', 'date_from', 'date_to')
     def _get_loan_lines(self):
+        line_ids = []
         for rec in self:
-            line_ids = []
             if rec.employee_id and rec.date_from and rec.date_to:
                 loans_lines = self.env['hr.loan.line'].search(
                     [('loan_id.employee_id', '=', rec.employee_id.id), ('loan_id.state', 'in', ['sent','approved']),
@@ -64,14 +64,14 @@ class HrPayslip(models.Model):
                     line_ids.append(line.id)
                     # line.write({'payslip_id': self.id})
 
-                rec.loan_lines_ids = [[6, 0, line_ids]]
+        self.loan_lines_ids = [[6, 0, line_ids]]
 
 
 
 
     def compute_sheet(self):
-        for rec in self:
-            rec._get_loan_lines()
+        self._get_loan_lines()
+
         res = super(HrPayslip, self).compute_sheet()
         return res
 

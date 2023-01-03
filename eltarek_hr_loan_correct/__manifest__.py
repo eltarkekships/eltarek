@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'ELTarek Hr Loan',
+    'name': 'ElTarek Hr Loan Correct',
     'version': '1.0',
     'category': '',
     'website': 'https://www.centione.com',
-    'summary': 'Module for loans and its calculations' ,
+    'summary': '',
     'author':'Centione',
     'description': """
 The module applies the following:

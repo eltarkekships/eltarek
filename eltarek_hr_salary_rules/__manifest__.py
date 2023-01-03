@@ -10,8 +10,9 @@
     'website': "http://www.centione.com",
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'hr', 'hr_contract',  'hr_payroll',
-                'eltarek_hr_payroll_base', 'hr_payroll_account','eltarek_hr_mission_excuse_end_service'],
+    'depends': ['base', 'hr', 'hr_contract', 'hr_payroll',
+                'eltarek_hr_payroll_base', 'hr_payroll_account', 'eltarek_hr_mission_excuse_end_service', 'account',
+                'hr_work_entry_contract_enterprise'],
 
     # always loaded
     'data': [

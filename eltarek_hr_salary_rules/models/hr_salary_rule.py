@@ -15,3 +15,4 @@ class HrSalaryRule(models.Model):
 
     contract_valid_based = fields.Boolean(default=False,
                                           help="If this field is set the salary rule rate will be affected by the start and end dates of the contract.")
+    is_analytic = fields.Boolean('Is Analytic')

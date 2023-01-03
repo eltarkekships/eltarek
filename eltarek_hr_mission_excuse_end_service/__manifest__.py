@@ -20,7 +20,7 @@
 
     # any module necessary for this one to work correctly
     'depends': ['hr_holidays', 'hr_payroll','hr',
-                'eltarek_hr_loan',
+                'eltarek_hr_loan_correct',
                 'hr_work_entry_contract','hr_recruitment','eltarek_hr_end_service'],
 
     # always loaded

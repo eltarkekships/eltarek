@@ -8,6 +8,7 @@
 
                 <xpath expr="//field[@name='appears_on_payslip']" position="after">
                     <field name="contract_valid_based"/>
+                    <field name="is_analytic"/>
                 </xpath>
 
             </field>

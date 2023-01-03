@@ -11,6 +11,8 @@
                         <group>
                             <group>
                                 <field name="payment_journal_id"/>
+                                <field name="emp_account_id"/>
+                                <field name="treasury_account_id"/>
                             </group>
                         </group>
                     </sheet>

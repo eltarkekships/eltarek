@@ -14,5 +14,21 @@
 
             </field>
         </record>
+
+        <record id="account_is_expenese_revenue_form_inherit" model="ir.ui.view">
+            <field name="name">account.is.expenese.revenue.form.inherit</field>
+            <field name="model">account.account.type</field>
+            <field name="inherit_id" ref="account.view_account_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="is_expense_or_cost_revenue"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="account_type_menu" name="Account Type" parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration" action="account.action_account_type_form" sequence="101"
+        groups="eltarek_access_groups_and_rules.group_show_employee_account_type"/>
     </data>
 </odoo>

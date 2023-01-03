@@ -22,6 +22,13 @@ class LoanPayment(models.Model):
          ], default='open', string='State')
     loan_installment_date = fields.Date()
     loan_line_ids = fields.One2many('acc.loan.line', 'loan_id', 'Loan Lines')
+    entry_count = fields.Integer(string="Entry Count", compute='compute_entry_count')
+    move_id = fields.Many2one('account.move')
+
+    def compute_entry_count(self):
+        for rec in self:
+            rec.entry_count = self.env['account.move.line'].search_count([('loan_id', '=', rec.id)])
+
 
     @api.model
     def create(self, vals):

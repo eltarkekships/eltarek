@@ -27,16 +27,15 @@ class HrLoan(models.Model):
 
 
     def unlink(self):
-        for rec in self:
-            if rec.state != 'draft':
-                raise ValidationError(_('Error ! You Cannot Delete The Loan Tn This State '))
-            else:
-                for line in rec.loan_line:
-                    if line.state == 'unpaid':
-                        line.unlink()
-                    else:
-                        raise ValidationError(_('Error ! You Have Line Piad You Cannot Delete The Loan .'))
-            return super(HrLoan, rec).unlink()
+        if self.state != 'draft':
+            raise ValidationError(_('Error ! You Cannot Delete The Loan Tn This State '))
+        else:
+            for line in self.loan_line:
+                if line.state == 'unpaid':
+                    line.unlink()
+                else:
+                    raise ValidationError(_('Error ! You Have Line Piad You Cannot Delete The Loan .'))
+        return super(HrLoan, self).unlink()
 
 
     @api.depends('employee_id', 'loan_type', 'requested_date')
@@ -79,17 +78,17 @@ class HrLoan(models.Model):
 
         self.remaining_budget = remaining_budget
 
-    name = fields.Char(required=True)
+    name = fields.Char(required=True,track_visibility='always')
     loan_type = fields.Selection(string="Loan Type",
                                  selection=[('long_term', 'Loan Long Term'),
                                             ('short_term', 'Loan Short Term')],
-                                 required=True)
+                                 required=True,track_visibility='always')
 
     remaining_budget = fields.Float(string="Total Loan Budget", compute=compute_remaining_budget, store=True,
                                     required=False, )
-    employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
+    employee_id = fields.Many2one('hr.employee', string='Employee', required=True,)
     company_id = fields.Many2one(related='employee_id.company_id', string='Company', readonly=True, store=True)
-    requested_date = fields.Date(default=fields.Date.today())
+    requested_date = fields.Date(default=fields.Date.today(),track_visibility='always')
     settlement_date = fields.Date(string='Start Date For Settlement', default=fields.Date.today())
     requested_amount = fields.Float(required=True)
     installment_amount = fields.Float(required=True)
@@ -104,14 +103,14 @@ class HrLoan(models.Model):
     loan_line = fields.One2many('hr.loan.line', 'loan_id')
     journal_created = fields.Boolean(default=False)
     total_unpaid = fields.Float(compute='_compute_total_unpaid', store=True)
+    hr_code_rel = fields.Char(related='employee_id.hr_code')
 
 
     @api.depends('loan_line')
     def _compute_total_unpaid(self):
-        for rec in self:
-            rec.total_unpaid = 0
-            for line in rec.loan_line:
-                rec.total_unpaid += (line.amount - line.paid_amount)
+        self.total_unpaid = 0
+        for line in self.loan_line:
+            self.total_unpaid += (line.amount - line.paid_amount)
 
 
     @api.constrains('requested_amount')
@@ -122,16 +121,16 @@ class HrLoan(models.Model):
         return True
 
 
-    # def unlink(self):
-    #     if self.state != 'draft':
-    #         raise ValidationError(_('Error ! You Cannot Delete The Loan Tn This State '))
-    #     else:
-    #         for line in self.loan_line:
-    #             if line.state == 'unpaid':
-    #                 line.unlink()
-    #             else:
-    #                 raise ValidationError(_('Error ! You Have Line Piad You Cannot Delete The Loan .'))
-    #     return super(HrLoan, self).unlink()
+    def unlink(self):
+        if self.state != 'draft':
+            raise ValidationError(_('Error ! You Cannot Delete The Loan Tn This State '))
+        else:
+            for line in self.loan_line:
+                if line.state == 'unpaid':
+                    line.unlink()
+                else:
+                    raise ValidationError(_('Error ! You Have Line Piad You Cannot Delete The Loan .'))
+        return super(HrLoan, self).unlink()
 
 
     def action_approved(self):
@@ -147,7 +146,6 @@ class HrLoan(models.Model):
             raise ValidationError(_('Error ! You Cannot Approved Without Lines .'))
         return True
 
-    refuse_comment = fields.Text('Refuse Comment')
 
     def action_cancel(self):
         """ Put the state of the Loan into cancel state """

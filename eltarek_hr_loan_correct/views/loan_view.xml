@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_loan_form" model="ir.ui.view">
+    <record id="loan_form_view" model="ir.ui.view">
         <field name="name">Employees Loans Form</field>
         <field name="model">hr.loan</field>
         <field name="priority" eval="15"/>
@@ -11,11 +11,12 @@
                             groups="hr.group_hr_manager"/>
                     <button name="action_cancel" states="draft" string="Cancel" type="object" class="oe_highlight"
                             groups="hr.group_hr_manager"/>
-                    <button name="%(eltarek_hr_loan.view_loan_payment_wizard_action)d" states="approved"
+                    <button name="%(eltarek_hr_loan_correct.view_loan_payment_wizard_action)d" states="approved"
                             string="Make Payment" type="action" class="oe_highlight"
-                            groups="hr.group_hr_manager"/>
-                    <button name="%(eltarek_hr_loan.view_payment_delay_wizard_action)d" states="approved"
-                            string="Delay Payments" type="action" class="oe_highlight"
+                            invisible="1"
+                            groups="hr.group_hr_manager" attrs="{'invisible':[('state','not in',['sent','approved'])]}"/>
+                    <button name="%(eltarek_hr_loan_correct.view_payment_delay_wizard_action)d" states="approved"
+                            string="Delay Payments" type="action" class="oe_highlight" attrs="{'invisible':[('state','not in',['sent','approved'])]}"
                             groups="hr.group_hr_manager"/>
                      <button string="Send Payment Loan Request" type="object" name="send_payment_request"  attrs="{'invisible':[('state','!=','approved')]}" groups="hr.group_hr_user"/>
                     <field name="state" widget="statusbar"/>
@@ -45,7 +46,7 @@
                                attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}"/>
                         <field name="remaining_budget"/>
                         <field name="total_unpaid"/>
-                        <field name="refuse_comment" groups="base.group_user"/>
+
                     </group>
 
 
@@ -101,6 +102,7 @@
             <search string="Search Loans">
                 <field name="employee_id"/>
                 <field name="name"/>
+                <field name="hr_code_rel"/>
             </search>
         </field>
     </record>
